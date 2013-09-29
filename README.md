@@ -50,3 +50,12 @@ Add the following lines to the Vagrantfile
 
 And also boot VM without headless if you want by turning on vb.gui = true
 
+Debugging Vagrant
+=================
+
+To turn on logging enter the following
+
+    set VAGRANT_LOG=info
+    vagrant up
+
+

@@ -16,6 +16,7 @@ local.properties
 .settings/
 .loadpath
 .vagrant
+NetFx4
 
 # External tool builders
 .externalToolBuilders/

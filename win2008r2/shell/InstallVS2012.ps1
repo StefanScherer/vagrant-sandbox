@@ -1,4 +1,4 @@
-& cinst VisualStudio2012Professional 
+& cinst VisualStudio2012Premium 
 & cinst Dogtail.VS2012.3
 & cinst visualsvn
 & cinst wixtoolset 

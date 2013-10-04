@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "file:///b:/GitHub/basebox-packer/virtualbox/stefan-win81x64preview.box"
+  config.vm.box_url = "file:///e:/basebox/stefan-win81x64preview.box"
   config.vm.guest = :windows
 
   # Max time to wait for the guest to shutdown

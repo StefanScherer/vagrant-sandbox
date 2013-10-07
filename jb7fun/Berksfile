@@ -1,0 +1,5 @@
+site :opscode
+
+metadata
+
+cookbook "jboss7", github: "SaschaMoellering/jboss7"

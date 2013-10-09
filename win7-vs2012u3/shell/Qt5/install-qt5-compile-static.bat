@@ -12,8 +12,10 @@ if not exist C:\Qt\Qt%1\%1\Src.zip goto COMPILED
 cd /D C:\Qt\Qt%1\%1
 
 if exist C:\Qt\Qt%1\%1\%4 goto COMPILED
+if not exist Src goto extract
 echo Deleting Src
 del /F /S /Q Src\ >nul
+:exctract
 echo Extracting Src.zip
 call 7za x Src.zip >nul
 xcopy "%~dp0\win32-%2-static" C:\Qt\Qt%1\%1\Src\qtbase\mkspecs\win32-%2\ /s /e /i /h /y
@@ -63,6 +65,12 @@ if not defined REGDATA call :initreg %*
 
 call :regquery HKCU\Software\Digia\Versions\Qt%1_%4 InstallDir
 if not defined REGDATA call :regadd HKCU\Software\Digia\Versions\Qt%1_%4 InstallDir REG_SZ C:\Qt\Qt%1\%1\%4
+
+cd /D C:\Qt\Qt%1\%1
+if not exist Src goto cleaned
+echo Deleting Src
+del /F /S /Q Src\ >nul
+:cleaned
 
 echo Done.
 goto nowait

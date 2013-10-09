@@ -17,6 +17,7 @@ local.properties
 .loadpath
 .vagrant
 NetFx4
+QtCommercial
 
 # External tool builders
 .externalToolBuilders/

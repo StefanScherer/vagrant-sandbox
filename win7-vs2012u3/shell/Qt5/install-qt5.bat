@@ -14,8 +14,6 @@ if exist C:\strawberry goto PERL_INSTALLED
 call cinst StrawberryPerl
 :PERL_INSTALLED
 
-goto NO_QTLIC
-
 if exist %USERPROFILE%\.qt-license goto QTLIC_INSTALLED
 if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" goto NO_QTLIC
 echo Licensing Qt5
@@ -53,10 +51,12 @@ call cinst cmake
 :CMAKE_INSTALLED
 
 echo Starting Qt5 64bit compile in second window
-start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static
+echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static >C:\Qt\Qt%1\%1\make_%2_64_static.bat
+rem start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static
 
 echo Starting Qt5 32bit compile in second window
-start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static
+echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static >C:\Qt\Qt%1\%1\make_%2_62_static.bat
+rem start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static
 
 goto nowait
 

@@ -18,3 +18,5 @@ echo 'Installing Developer Base'
 echo 'Installing VS2012'
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallVS2012.ps1"
 
+@powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\Qt5\Set-ShortCut.ps1"
+

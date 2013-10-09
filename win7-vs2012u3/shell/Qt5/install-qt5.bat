@@ -14,8 +14,10 @@ if exist C:\strawberry goto PERL_INSTALLED
 call cinst StrawberryPerl
 :PERL_INSTALLED
 
+goto NO_QTLIC
+
 if exist %USERPROFILE%\.qt-license goto QTLIC_INSTALLED
-if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" goto QTLIC_INSTALLED
+if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" goto NO_QTLIC
 echo Licensing Qt5
 copy "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" %USERPROFILE%\.qt-license
 :QTLIC_INSTALLED
@@ -66,6 +68,16 @@ goto wait
 echo No MSVC compiler version given, eg. msvc2012
 goto wait
 
+
+:NO_QTLIC
+@cls
+@echo You need a valid Qt5 license file to install and compile Qt%1
+@echo.
+@echo Files needed:
+@echo.
+@echo C:\vagrant\resources\QtCommercial\Qt%1\DistLicenseFile.txt
+@echo C:\vagrant\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe
+@echo C:\vagrant\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe
 
 :wait
 time /t

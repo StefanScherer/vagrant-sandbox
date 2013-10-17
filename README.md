@@ -21,6 +21,10 @@ Additionally install the vagrant-berkshelf plugin into vagrant.
     cd /
     vagrant plugin install vagrant-berkshelf
 
+Additionally install the vagrant-vbox-snapshot plugin to take snapshots with VirtualBox.
+
+    vagrant plugin install vagrant-vbox-snapshot
+
 Setup a new directory to import a basebox with vagrant
 
     cd /D B:\

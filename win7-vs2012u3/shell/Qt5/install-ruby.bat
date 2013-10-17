@@ -6,11 +6,14 @@ call cinst ruby
 set PATH=%PATH%;C:\ruby200\bin
 :RUBY_INSTALLED
 
+call cinst curl
+
 call gem install sinatra
 call gem install sinatra-contrib
 call gem install ocra
 
 REM from Seven Web Frameworks in Seven Weeks 
+call cinst sqlite
 call gem install rspec rack-test
 call gem install sqlite3 data_mapper dm-sqlite-adapter
 call gem install dm-serializer

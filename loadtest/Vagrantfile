@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+# build two boxes:
+#   loader - this box has curl-loader installed and runs a test against the server
+#   server - this box is our server with an web server to load test
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+
+  config.vm.define "loader", primary: true do |loader|
+    loader.vm.box = "precise32"
+    loader.vm.network :private_network, ip: "192.168.33.10", gateway: "192.168.33.1"
+    loader.vm.provision "shell", path: "shell/install-curl-loader.sh"
+    loader.vm.hostname = "loader"
+
+     loader.vm.provider :virtualbox do |vb|
+       vb.gui = true
+       vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
+     end
+  end
+
+  config.vm.define "server" do |server|
+    server.vm.box = "precise32"
+    server.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
+    server.vm.provision "shell", path: "shell/install-server.sh"
+    server.vm.hostname = "server"
+
+    server.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "4"]
+    end
+  end
+
+end

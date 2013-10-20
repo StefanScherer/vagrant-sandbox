@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "default", primary: true do |default|
     default.vm.box = "stefan-win7x64"
-    default.vm.network :private_network, ip: "192.168.33.10", gateway: "192.168.33.1"
+#    default.vm.network :private_network, ip: "192.168.33.10", gateway: "192.168.33.1"
     default.vm.provision "shell", path: "shell/main.cmd"
     default.winrm.port = 25985
     default.vm.network :forwarded_port, guest: 5985, host: 25985
@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "testwin7x64" do |testwin7x64|
     testwin7x64.vm.box = "stefan-win7x64"
-    testwin7x64.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
+#    testwin7x64.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
     testwin7x64.vm.provision "shell", path: "shell/test.cmd"
     testwin7x64.winrm.port = 25986
     testwin7x64.vm.network :forwarded_port, guest: 5985, host: 25986

@@ -22,10 +22,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "default", primary: true do |default|
     default.vm.box = "stefan-win7x64"
-#    default.vm.network :private_network, ip: "192.168.33.10", gateway: "192.168.33.1"
+    default.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
     default.vm.provision "shell", path: "shell/main.cmd"
     default.winrm.port = 25985
-    default.vm.network :forwarded_port, guest: 5985, host: 25985
+    default.vm.network :forwarded_port, guest: 5985, host: 59812
 
      default.vm.provider :virtualbox do |vb|
        vb.gui = true

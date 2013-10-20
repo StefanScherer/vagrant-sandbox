@@ -1,0 +1,61 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.guest = :windows
+  config.windows.halt_timeout = 25
+
+  config.vm.boot_timeout = 120
+
+  config.winrm.username = "vagrant"
+  config.winrm.password = "vagrant"
+
+  config.vm.define "dc", primary: true do |dc|
+    dc.vm.box = "win2008R2-datacenter-eval"
+    dc.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
+
+    dc.vm.network :private_network, ip: "192.168.33.3", gateway: "192.168.33.1"
+    dc.winrm.port = 59853
+    dc.vm.network :forwarded_port, guest: 5985, host: 59853
+
+    dc.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
+    end
+  
+    dc.berkshelf.enabled = true
+
+    dc.vm.provision :chef_solo do |chef|
+  
+      chef.run_list = [
+          "recipe[windomain::dc]"
+      ]
+    end
+  end
+
+  config.vm.define "ps01", primary: true do |ps01|
+    ps01.vm.box = "win2008R2-datacenter-eval"
+    ps01.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
+
+    ps01.vm.network :private_network, ip: "192.168.33.4", gateway: "192.168.33.1"
+    ps01.winrm.port = 59853
+    ps01.vm.network :forwarded_port, guest: 5985, host: 59854
+
+    ps01.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
+    end
+  
+    ps01.berkshelf.enabled = true
+
+    ps01.vm.provision :chef_solo do |chef|
+  
+      chef.run_list = [
+          "recipe[windomain::ps]"
+      ]
+    end
+  end
+
+
+end

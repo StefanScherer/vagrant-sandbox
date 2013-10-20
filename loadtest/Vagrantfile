@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      end
   end
 
-  config.vm.define "server" do |server|
+  config.vm.define "server", primary: true do |server|
     server.vm.box = "precise32"
     server.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
     server.vm.provision "shell", path: "shell/install-server.sh"

@@ -5,10 +5,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.guest = :windows
 
-  # Max time to wait for the guest to shutdown
+  config.vm.guest = :windows
   config.windows.halt_timeout = 25
+  config.winrm.username = "vagrant"
+  config.winrm.password = "vagrant"
 
   config.vm.define "default", primary: true do |default|
     default.vm.box = "stefan-win7x64"
@@ -27,10 +28,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "testwin7x64" do |testwin7x64|
     testwin7x64.vm.box = "win7x64en-enterprise"
     testwin7x64.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
-    testwin7x64.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
+    testwin7x64.vm.network :private_network, ip: "192.168.33.70", gateway: "192.168.33.1"
     testwin7x64.vm.provision "shell", path: "shell/test.cmd"
-    testwin7x64.winrm.port = 25986
-    testwin7x64.vm.network :forwarded_port, guest: 5985, host: 25986
+    testwin7x64.winrm.port = 59867
+    testwin7x64.vm.network :forwarded_port, guest: 5985, host: 59867
 
     testwin7x64.vm.provider :virtualbox do |vb|
       vb.gui = true
@@ -41,19 +42,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "testwin81x64" do |testwin81x64|
     testwin81x64.vm.box = "win81x64en-eval"
     testwin81x64.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    testwin81x64.vm.network :private_network, ip: "192.168.33.14", gateway: "192.168.33.1"
+    testwin81x64.vm.network :private_network, ip: "192.168.33.81", gateway: "192.168.33.1"
     testwin81x64.vm.provision "shell", path: "shell/test.cmd"
-    testwin81x64.winrm.port = 25986
-    testwin81x64.vm.network :forwarded_port, guest: 5985, host: 25986
+    testwin81x64.winrm.port = 59881
+    testwin81x64.vm.network :forwarded_port, guest: 5985, host: 59881
 
     testwin81x64.vm.provider :virtualbox do |vb|
       vb.gui = true
       vb.customize ["modifyvm", :id, "--memory", "768"]
     end
   end
-
-  # Admin user name and password
-  config.winrm.username = "vagrant"
-  config.winrm.password = "vagrant"
 
 end

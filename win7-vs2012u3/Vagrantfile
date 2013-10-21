@@ -5,16 +5,6 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
-
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "stefan-win7x64"
-
-  # The url from where the 'config.vm.box' box will be fetched if it
-  # doesn't already exist on the user's system.
-  config.vm.box_url = "file:///e:/basebox/stefan-win7x64.box"
   config.vm.guest = :windows
 
   # Max time to wait for the guest to shutdown
@@ -22,6 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "default", primary: true do |default|
     default.vm.box = "stefan-win7x64"
+    default.vm.box_url = "file:///e:/basebox/stefan-win7x64.box"
     default.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
     default.vm.provision "shell", path: "shell/main.cmd"
     default.winrm.port = 25985
@@ -34,13 +25,28 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "testwin7x64" do |testwin7x64|
-    testwin7x64.vm.box = "stefan-win7x64"
-#    testwin7x64.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
+    testwin7x64.vm.box = "win7x64en-enterprise"
+    testwin7x64.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
+    testwin7x64.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
     testwin7x64.vm.provision "shell", path: "shell/test.cmd"
     testwin7x64.winrm.port = 25986
     testwin7x64.vm.network :forwarded_port, guest: 5985, host: 25986
 
     testwin7x64.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "768"]
+    end
+  end
+
+  config.vm.define "testwin81x64" do |testwin81x64|
+    testwin81x64.vm.box = "win81x64en-eval"
+    testwin81x64.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
+    testwin81x64.vm.network :private_network, ip: "192.168.33.14", gateway: "192.168.33.1"
+    testwin81x64.vm.provision "shell", path: "shell/test.cmd"
+    testwin81x64.winrm.port = 25986
+    testwin81x64.vm.network :forwarded_port, guest: 5985, host: 25986
+
+    testwin81x64.vm.provider :virtualbox do |vb|
       vb.gui = true
       vb.customize ["modifyvm", :id, "--memory", "768"]
     end

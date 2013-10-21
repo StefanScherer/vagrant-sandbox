@@ -18,6 +18,8 @@ local.properties
 .vagrant
 NetFx4
 QtCommercial
+*.msi
+*.exe
 
 # External tool builders
 .externalToolBuilders/

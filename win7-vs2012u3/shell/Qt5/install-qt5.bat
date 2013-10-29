@@ -10,6 +10,7 @@ set PATH=%PATH%;%ChocolateyInstall%\bin
 :inst
 cd /D %ChocolateyInstall%
 
+call cinst autoit.commandline
 if exist C:\strawberry goto PERL_INSTALLED
 call cinst StrawberryPerl
 :PERL_INSTALLED
@@ -23,13 +24,15 @@ copy "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" %USERPROFILE%
 if exist "%ProgramFiles(x86)%\Digia\Qt5VSAddin" goto QT5ADDIN_INSTALLED
 if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe" goto QT5ADDIN_INSTALLED
 echo Installing Qt5 VS AddIn interactively
-"%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
+call autoit3 %~dp0\install-qt-vs-addin.au3 "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
+rem "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
 :QT5ADDIN_INSTALLED
 
 if exist c:\Qt\Qt%1 goto QT5_INSTALLED
 if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe" goto QT5_INSTALLED
-echo Installing Qt5 MSVC2012 offline
-"%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe"
+echo Installing Qt5 MSVC2012 interactively
+call autoit3 %~dp0\install-qt-enterprise.au3 \\VBOXSVR\vagrant\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe
+rem "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe"
 :QT5_INSTALLED
 
 if exist %ChocolateyInstall%\bin\7za.bat goto ZIP_INSTALLED

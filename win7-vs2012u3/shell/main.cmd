@@ -20,5 +20,9 @@ echo 'Installing VS2012'
 
 if not exist "c:\vagrant\resources\QtCommercial\Qt5.1.1\DistLicenseFile.txt" goto QTDONE
 rem @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\Qt5\Set-ShortCut.ps1"
-call "c:\vagrant\shell\Qt5\install-qt5.bat" 5.1.1 msvc2012
+
+schtasks /Delete /F /TN InstQt5
+schtasks /Create /SC ONLOGON /TN InstQt5 /TR "c:\vagrant\shell\Qt5\install-qt5.bat 5.1.1 msvc2012"
+schtasks /Run /TN InstQt5
+
 :QTDONE

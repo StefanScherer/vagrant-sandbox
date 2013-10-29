@@ -10,7 +10,10 @@ set PATH=%PATH%;%ChocolateyInstall%\bin
 :inst
 cd /D %ChocolateyInstall%
 
+if exist C:\chocolatey\bin\autoit3.bat goto AUTOIT_INSTALLED
 call cinst autoit.commandline
+:AUTOIT_INSTALLED
+
 if exist C:\strawberry goto PERL_INSTALLED
 call cinst StrawberryPerl
 :PERL_INSTALLED
@@ -24,7 +27,9 @@ copy "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" %USERPROFILE%
 if exist "%ProgramFiles(x86)%\Digia\Qt5VSAddin" goto QT5ADDIN_INSTALLED
 if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe" goto QT5ADDIN_INSTALLED
 echo Installing Qt5 VS AddIn interactively
-call autoit3 %~dp0\install-qt-vs-addin.au3 "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
+rem call AutoIt3 c:\vagrant\shell\Qt5\install-qt-vs-addin.au3 C:\vagrant\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
+
+call AutoIt3 %~dp0\install-qt-vs-addin.au3 "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
 rem "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
 :QT5ADDIN_INSTALLED
 
@@ -86,3 +91,4 @@ goto wait
 time /t
 pause
 :nowait
+schtasks /Delete /F /TN InstQt5

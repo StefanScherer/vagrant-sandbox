@@ -4,7 +4,9 @@ EndIf
 
 ; "C:\vagrant\resources\QtCommercial\Qt5.1.1\qt-vs-addin-1.2.2.exe"
 Run($CmdLine[1])
-WinWaitActive("Qt5 Visual Studio Add-in")
+WinWait("Qt5 Visual Studio Add-in")
+Sleep(500)
+WinActivate("Qt5 Visual Studio Add-in")
 ; Welcome
 Send("!n") ; Next
 

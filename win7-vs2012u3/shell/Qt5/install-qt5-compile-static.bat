@@ -18,12 +18,14 @@ del /F /S /Q Src\ >nul
 :exctract
 echo Extracting Src.zip
 call 7za x Src.zip >nul
+     
 xcopy "%~dp0\win32-%2-static" C:\Qt\Qt%1\%1\Src\qtbase\mkspecs\win32-%2\ /s /e /i /h /y
 :MKSPEC_INSTALLED
 
+if not exist C:\Qt\Qt%1\%1\Src\qtbase goto ERR_UNZIP_SRC
 cd /D C:\Qt\Qt%1\%1\Src\qtbase
 if exist c:\chocolatey\lib\jom.1.0.13\content\jom.exe set PATH=c:\chocolatey\lib\jom.1.0.13\content;%PATH%
-configure.exe -prefix C:\Qt\Qt%1\%1\%4 -commercial -confirm-license -nomake tests -debug-and-release -no-opengl -no-icu -no-angle -no-sql-sqlite -no-freetype -make-tool jom -no-dbus -static
+configure.exe -prefix C:\Qt\Qt%1\%1\%4 -commercial -confirm-license -nomake tests -debug-and-release -no-opengl -no-icu -no-angle -no-sql-sqlite -no-freetype -make-tool jom -no-dbus -static -no-compile-examples
 call jom
 rem http://qt-project.org/wiki/Building_Qt_Documentation
 cd src
@@ -127,6 +129,9 @@ goto wait
 echo No Qt5 target prefix iven, eg. msvc2012_64_static
 goto wait
 
+:ERR_UNZIP_SRC
+echo Error unzipping src.zip, C:\Qt\Qt%1\%1\Src\qtbase does not exist.
+goto wait
 
 :wait
 time /t

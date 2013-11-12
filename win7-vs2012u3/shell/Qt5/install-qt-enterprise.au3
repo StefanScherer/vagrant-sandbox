@@ -4,7 +4,9 @@ EndIf
 
 ; "\\VBOXSVR\vagrant\resources\QtCommercial\Qt5.1.1\qt-enterprise-5.1.1-windows-msvc2012-x86_64-offline.exe"
 Run($CmdLine[1])
-WinWaitActive("Qt Enterprise")
+WinWait("Qt Enterprise")
+Sleep(500)
+WinActivate("Qt Enterprise")
 ; Welcome
 Sleep(2000)
 Send("!n") ; Next

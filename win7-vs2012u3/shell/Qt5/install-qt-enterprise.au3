@@ -38,4 +38,5 @@ WEnd
 Sleep(15000)
 
 ; Completing the Wizard
+Send("{TAB}{SPACE}{TAB}{SPACE}") ; turn off "Launch Qt Creator" and "Open Qt 5.1.1 ReadMe"
 Send("!f") ; Finish

@@ -1,8 +1,6 @@
 If $CmdLine[0] = 0 Then
-   ;Run("\\roettfs1.sealsystems.local\share\fm\frozen\complete.1.3.1.15_4.4.2\sealsetup.exe")
    Exit
 Else
-   ; "\\roettfs1.sealsystems.local\share\fm\frozen\complete.1.3.1.15_4.4.2\sealsetup.exe"
    Run($CmdLine[1])
 EndIf
 
@@ -94,22 +92,22 @@ WinActivate("SEALService (64 bit) Setup")
 Send("!n") ; Next
 
 ; End-User Licsense Agreement
-Sleep(100)
+Sleep(1000)
 ConsoleWrite("Send ALT-a + ALT-n")
 Send("!a!n") ; Accept + Next
 
 ; User
-Sleep(500)
+Sleep(1000)
 ConsoleWrite(", Send ALT-n")
 Send("!n") ; Next (user already inserted by sealsetup.exe)
 
 ; Destination Folder
-Sleep(500)
+Sleep(1000)
 ConsoleWrite(", Send ALT-n")
 Send("!n") ; Next
 
 ; Ready to install
-Sleep(500)
+Sleep(1000)
 ConsoleWrite(", Send ALT-i" & @CRLF)
 Send("!i") ; Install
 

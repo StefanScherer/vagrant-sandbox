@@ -12,9 +12,3 @@ set ChocolateyInstall=%SystemDrive%\Chocolatey
 set PATH=%PATH%;%ChocolateyInstall%\bin
 :inst
 
-echo 'Installing Developer Base'
-@powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallDeveloperBase.ps1"
-
-echo 'Installing VS2012'
-@powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallVS2012.ps1"
-

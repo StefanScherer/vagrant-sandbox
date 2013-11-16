@@ -11,15 +11,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.winrm.username = "vagrant"
   config.winrm.password = "vagrant"
 
-  config.vm.define "default", primary: true do |default|
-    default.vm.box = "stefan-win7x64"
-    default.vm.box_url = "file:///e:/basebox/stefan-win7x64.box"
-    default.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
-    default.vm.provision "shell", path: "shell/main.cmd"
-    default.winrm.port = 59812
-    default.vm.network :forwarded_port, guest: 5985, host: 59812
+  config.vm.define "multilingual" do |multilingual|
+    multilingual.vm.box = "win7x64en-enterprise"
+    multilingual.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
+    multilingual.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
+    multilingual.vm.provision "shell", path: "shell/multilingual.cmd"
+    multilingual.winrm.port = 59812
+    multilingual.vm.network :forwarded_port, guest: 5985, host: 59812
 
-     default.vm.provider :virtualbox do |vb|
+     multilingual.vm.provider :virtualbox do |vb|
        vb.gui = true
        vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
      end

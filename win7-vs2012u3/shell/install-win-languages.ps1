@@ -40,14 +40,16 @@ Import-Module PSWindowsUpdate
 # "Install Russian Language Pack"
 # get-wuinstall -Title "Russian Language Pack" -AcceptAll
 
-"Install all available Language Packs"
+"Install some  Language Packs"
+get-wuinstall -Title "Bulgarian Language Pack" -AcceptAll
+get-wuinstall -Title "Danish Language Pack" -AcceptAll
+get-wuinstall -Title "German Language Pack" -AcceptAll
 get-wuinstall -Title "Spanish Language Pack" -AcceptAll
-#get-wuinstall -Title "Danish Language Pack" -AcceptAll
-#get-wuinstall -Title "Polish Language Pack" -AcceptAll
-#get-wuinstall -Title "Bulgarian Language Pack" -AcceptAll
-#get-wuinstall -Title "Dutch Language Pack" -AcceptAll
-#get-wuinstall -Title "Romanian Language Pack" -AcceptAll
-#get-wuinstall -Title "French Language Pack" -AcceptAll
+get-wuinstall -Title "French Language Pack" -AcceptAll
+get-wuinstall -Title "Italian Language Pack" -AcceptAll
+get-wuinstall -Title "Dutch Language Pack" -AcceptAll
+get-wuinstall -Title "Polish Language Pack" -AcceptAll
+get-wuinstall -Title "Romanian Language Pack" -AcceptAll
 
 # Latvian Language Pack
 # Czech Language Pack

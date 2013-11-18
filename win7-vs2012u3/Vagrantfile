@@ -21,8 +21,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     multilingual.vm.provider :virtualbox do |vb|
       vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
       vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'hda'] # choices: hda sb16 ac97
+      vb.customize ["modifyvm", :id, '--usb', 'on', '--usbehci', 'off']
     end
   end
 

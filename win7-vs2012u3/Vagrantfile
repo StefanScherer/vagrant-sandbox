@@ -19,10 +19,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     multilingual.winrm.port = 59812
     multilingual.vm.network :forwarded_port, guest: 5985, host: 59812
 
-     multilingual.vm.provider :virtualbox do |vb|
-       vb.gui = true
-       vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
-     end
+    multilingual.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "2"]
+      vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'hda'] # choices: hda sb16 ac97
+    end
   end
 
   config.vm.define "vs2012", primary: true do |vs2012|

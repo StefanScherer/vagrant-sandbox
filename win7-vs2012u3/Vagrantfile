@@ -65,7 +65,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     testwin81x64.vm.provider :virtualbox do |vb|
       vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "768"]
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--vram", "32"]
+      vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
     end
   end
 

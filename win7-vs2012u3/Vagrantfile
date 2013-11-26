@@ -11,15 +11,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.winrm.username = "vagrant"
   config.winrm.password = "vagrant"
 
-  config.vm.define "multilingual" do |multilingual|
-    multilingual.vm.box = "win7x64en-enterprise"
-    multilingual.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
-    multilingual.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
-    multilingual.vm.provision "shell", path: "shell/multilingual.cmd"
-    multilingual.winrm.port = 59812
-    multilingual.vm.network :forwarded_port, guest: 5985, host: 59812
+  config.vm.define "multilang" do |multilang|
+    multilang.vm.box = "win7x64en-enterprise"
+    multilang.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
+    multilang.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
+    multilang.vm.provision "shell", path: "shell/multilingual.cmd"
+    multilang.winrm.port = 59812
+    multilang.vm.network :forwarded_port, guest: 5985, host: 59812
 
-    multilingual.vm.provider :virtualbox do |vb|
+    multilang.vm.provider :virtualbox do |vb|
       vb.gui = true
       vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
       vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'hda'] # choices: hda sb16 ac97
@@ -28,8 +28,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "vs2012", primary: true do |vs2012|
-    vs2012.vm.box = "win7x64en-enterprise"
-    vs2012.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
+    vs2012.vm.box = "win81x64en-eval"
+    vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
+#    vs2012.vm.box = "win7x64en-enterprise"
+#    vs2012.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     vs2012.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
     vs2012.vm.provision "shell", path: "shell/main.cmd"
     vs2012.winrm.port = 59813
@@ -38,6 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      vs2012.vm.provider :virtualbox do |vb|
        vb.gui = true
        vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
+       vb.customize ["modifyvm", :id, "--vram", "32"]
+       vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
      end
   end
 

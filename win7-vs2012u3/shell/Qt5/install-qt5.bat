@@ -59,6 +59,8 @@ if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%
 echo Installing Qt5 MSVC2012 interactively
 call autoit3 %~dp0\install-qt-enterprise.au3 \\VBOXSVR\vagrant\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe
 rem "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe"
+
+powershell -NoProfile -ExecutionPolicy Bypass -File %~dp0\PinQtCreator.ps1 %1
 :QT5_INSTALLED
 
 if not exist C:\Qt\Qt%1\%1\Src goto SRC_ZIPPED

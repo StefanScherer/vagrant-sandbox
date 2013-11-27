@@ -218,3 +218,8 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# ignore some resources
+02_muvpn
+Nuance*
+resources/

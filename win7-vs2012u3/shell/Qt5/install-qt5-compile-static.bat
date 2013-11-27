@@ -4,14 +4,20 @@ if "%2x"=="x" goto NO_COMPILER_VERSION
 if "%3x"=="x" goto NO_PLATFORM
 if "%4x"=="x" goto NO_QT5_PREFIX
 
+if exist C:\Qt\Qt%1\%1\%4 goto COMPILED
+if not exist C:\Qt\Qt%1\%1\Src.zip goto COMPILED
+cd /D C:\Qt\Qt%1\%1
+
 echo Qt5 %4 compile
 call "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" %3
 echo on
 
-if not exist C:\Qt\Qt%1\%1\Src.zip goto COMPILED
-cd /D C:\Qt\Qt%1\%1
-
+if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip" CHECK_COMPILE
+call 7za "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip"
 if exist C:\Qt\Qt%1\%1\%4 goto COMPILED
+
+:CHECK_COMPILE
+
 if not exist Src goto extract
 echo Deleting Src
 del /F /S /Q Src\ >nul
@@ -58,6 +64,7 @@ call jom install_global_docs
 call jom install_docs
 echo "%~dp0\install-qt5-compile-static-patch-prf.pl"
 c:\strawberry\perl\bin\perl.exe "%~dp0\install-qt5-compile-static-patch-prl.pl" "C:\Qt\Qt%1\%1\%4" %4
+set COMPILED=1
 
 :COMPILED
 echo Updating Registry
@@ -70,8 +77,12 @@ if not defined REGDATA call :regadd HKCU\Software\Digia\Versions\Qt%1_%4 Install
 
 cd /D C:\Qt\Qt%1\%1
 if not exist Src goto cleaned
+if "%COMPILED%x"=="x" goto :cleaned
 echo Deleting Src
 del /F /S /Q Src\ >nul
+
+echo Zipping Compiled version
+call 7za a "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip" %4 >nul
 :cleaned
 
 echo Done.

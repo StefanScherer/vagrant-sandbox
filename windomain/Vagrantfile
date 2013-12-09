@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
     ps01.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
 
     ps01.vm.network :private_network, ip: "192.168.33.4", gateway: "192.168.33.1"
-    ps01.winrm.port = 59853
+    ps01.winrm.port = 59854
     ps01.vm.network :forwarded_port, guest: 5985, host: 59854
 
     ps01.vm.provider :virtualbox do |vb|
@@ -50,6 +50,29 @@ Vagrant.configure("2") do |config|
     ps01.berkshelf.enabled = true
 
     ps01.vm.provision :chef_solo do |chef|
+  
+      chef.run_list = [
+          "recipe[windomain::ps]"
+      ]
+    end
+  end
+
+  config.vm.define "ps12R2", primary: true do |ps12R2|
+    ps12R2.vm.box = "win2012R2-datacenter-eval"
+    ps12R2.vm.box_url = "file:///e:/basebox/win2012R2-datacenter-eval.box"
+
+    ps12R2.vm.network :private_network, ip: "192.168.33.114", gateway: "192.168.33.1"
+    ps12R2.winrm.port = 59164
+    ps12R2.vm.network :forwarded_port, guest: 5985, host: 59164
+
+    ps12R2.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
+    end
+  
+    ps12R2.berkshelf.enabled = true
+
+    ps12R2.vm.provision :chef_solo do |chef|
   
       chef.run_list = [
           "recipe[windomain::ps]"

@@ -110,5 +110,3 @@ time /t
 pause
 :nowait
 schtasks /Delete /F /TN InstQt5
-
-pause

@@ -2,7 +2,7 @@ If $CmdLine[0] = 0 Then
    Exit
 EndIf
 
-; "\\VBOXSVR\vagrant\resources\QtCommercial\Qt5.1.1\qt-enterprise-5.1.1-windows-msvc2012-x86_64-offline.exe"
+; CmdLine[1] = "\\VBOXSVR\vagrant\resources\QtCommercial\Qt5.1.1\qt-enterprise-5.1.1-windows-msvc2012-x86_64-offline.exe"
 Run($CmdLine[1])
 WinWait("Qt Enterprise")
 Sleep(500)
@@ -34,7 +34,9 @@ Send("!n") ; Next
 Sleep(1000)
 Send("!i") ; Install
 
-While Not FileExists("C:\Qt\Qt5.1.1\MaintenanceTool.ini")
+; CmdLine[2] = 5.1.1  or 5.2.0 or ...
+$IniFile = "C:\Qt\Qt" & $CmdLine[2] & "\MaintenanceTool.ini"
+While Not FileExists($IniFile)
    Sleep(2000)
 WEnd
 Sleep(15000)

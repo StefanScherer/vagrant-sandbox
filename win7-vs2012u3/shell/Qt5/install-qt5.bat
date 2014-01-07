@@ -51,16 +51,22 @@ if exist "%ProgramFiles(x86)%\Digia\Qt5VSAddin" goto QT5ADDIN_INSTALLED
 if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe" goto QT5ADDIN_INSTALLED
 echo Installing Qt5 VS AddIn interactively
 call AutoIt3 %~dp0\install-qt-vs-addin.au3 "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
-rem "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-vs-addin-1.2.2.exe"
 :QT5ADDIN_INSTALLED
 
 if exist c:\Qt\Qt%1 goto QT5_INSTALLED
-if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe" goto QT5_INSTALLED
-echo Installing Qt5 MSVC2012 interactively
-call autoit3 %~dp0\install-qt-enterprise.au3 \\VBOXSVR\vagrant\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe
-rem "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe"
+if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe" goto QT5_CHECK_2ND
+echo Installing Qt%1 %2 interactively
+call autoit3 %~dp0\install-qt-enterprise.au3 \\VBOXSVR\vagrant\resources\QtCommercial\Qt%1\qt-enterprise-%1-windows-%2-x86_64-offline.exe %1
 
 powershell -NoProfile -ExecutionPolicy Bypass -File %~dp0\PinQtCreator.ps1 %1
+goto QT5_INSTALLED
+:QT5_CHECK_2ND
+if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\qt-enterprise-windows-%2-x86_64-%1.exe" goto QT5_INSTALLED
+echo Installing Qt%1 %2 interactively
+call autoit3 %~dp0\install-qt-enterprise.au3 \\VBOXSVR\vagrant\resources\QtCommercial\Qt%1\qt-enterprise-windows-%2-x86_64-%1.exe %1
+
+powershell -NoProfile -ExecutionPolicy Bypass -File %~dp0\PinQtCreator.ps1 %1
+
 :QT5_INSTALLED
 
 if not exist C:\Qt\Qt%1\%1\Src goto SRC_ZIPPED
@@ -104,3 +110,5 @@ time /t
 pause
 :nowait
 schtasks /Delete /F /TN InstQt5
+
+pause

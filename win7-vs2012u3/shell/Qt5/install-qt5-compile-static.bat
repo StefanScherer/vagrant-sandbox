@@ -12,8 +12,8 @@ echo Qt5 %4 compile
 call "C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\vcvarsall.bat" %3
 echo on
 
-if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip" CHECK_COMPILE
-call 7za "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip"
+if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip" goto CHECK_COMPILE
+call 7za a "%~dp0\..\..\resources\QtCommercial\Qt%1\%4.zip"
 if exist C:\Qt\Qt%1\%1\%4 goto COMPILED
 
 :CHECK_COMPILE

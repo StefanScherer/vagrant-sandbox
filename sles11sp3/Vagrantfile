@@ -49,6 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
+# test >10000 clients     vb.customize ["modifyvm", :id, "--memory", "10196", "--cpus", "4"]
      vb.customize ["modifyvm", :id, "--memory", "4096", "--cpus", "4"]
    end
   config.vm.hostname = "sles11sp3"

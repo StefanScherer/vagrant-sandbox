@@ -1,10 +1,9 @@
 #!/bin/sh
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-sudo apt-get -y -f install
-rm google-chrome-stable_current_amd64.deb
 
-sudo apt-get -y install compizconfig-settings-manager
+# german keyboard
+setxkbmap de
+
+sudo apt-get -y install chromium-browser
 sudo apt-get -y install vim git
 sudo apt-get -y install nodejs nodejs-legacy npm
 sudo npm install -g yo

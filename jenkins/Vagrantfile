@@ -1,0 +1,47 @@
+# vi: set ft=ruby :
+
+$script = <<SCRIPT
+# switch Ubuntu download mirror to German server
+sudo sed -i 's,http://us.archive.ubuntu.com/ubuntu/,http://ftp.fau.de/ubuntu/,' /etc/apt/sources.list
+sudo sed -i 's,http://security.ubuntu.com/ubuntu,http://ftp.fau.de/ubuntu,' /etc/apt/sources.list
+sudo apt-get update -y
+
+# switch to German keyboard layout
+sudo sed -i 's/"us"/"de"/g' /etc/default/keyboard
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y console-common
+sudo install-keymap de
+
+# set timezone to German timezone
+echo "Europe/Berlin" | sudo tee /etc/timezone
+sudo dpkg-reconfigure -f noninteractive tzdata
+
+# install development: 
+sudo apt-get install -y git vim
+
+# install jenkins
+wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
+sudo apt-get y update -y
+sudo apt-get install -y jenkins
+
+SCRIPT
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
+  config.vm.hostname = "ci"
+  config.vm.network :private_network, ip: "196.168.33.214"
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
+
+  config.vm.provision "shell", privileged: false, inline: $script
+
+  config.vm.provider :virtualbox do |vb|
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
+  end
+
+end

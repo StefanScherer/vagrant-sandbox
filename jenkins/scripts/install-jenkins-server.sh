@@ -51,4 +51,7 @@ java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle
 
 java -jar jenkins-cli.jar -s http://localhost:8080 groovy configure-jenkins.groovy
 
+java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle
 
+# restart jenkins to activate all plugins
+java -jar jenkins-cli.jar -s http://localhost:8080/ safe-restart

@@ -26,14 +26,13 @@ echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee /etc/apt/sources.
 sudo apt-get update -y
 sudo apt-get install -y jenkins
 
-cat <<'GROOVY' | tee configure-jenkins.groovy
-import jenkins.model.*
-import hudson.model.*
-import hudson.slaves.*
-Jenkins.instance.addNode(new DumbSlave("slave1","Windows 2008 R2","C:\\Users\\vagrant","1",Node.Mode.NORMAL,"slave1",new JNLPLauncher(),new RetentionStrategy.Always(),new LinkedList())) 
+# make jenkins available on port 80 in host-only network eth1
+sudo iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 80 -j REDIRECT --to-port 8080
+ifconfig eth1 | grep "inet addr"  | sed 's/.*inet addr://' | sed "s/ .*/ $HOSTNAME/" >/vagrant/resources/jenkins-host.txt
 
-GROOVY
-wget -O /vagrant/resources/swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.11/swarm-client-1.11-jar-with-dependencies.jar
+# retrieve latest version of swarm-client
+swarmClientVersion=`curl -s  http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/maven-metadata.xml | grep latest | sed 's/\s*[<>a-z/]//g'`
+wget -O /vagrant/resources/swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$swarmClientVersion/swarm-client-$swarmClientVersion-jar-with-dependencies.jar
 
 while [ ! -f jenkins-cli.jar ]
 do
@@ -48,10 +47,7 @@ curl -X POST -H "Accept: application/json" -d @default.json http://localhost:808
 
 java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin git
 java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle
-
-java -jar jenkins-cli.jar -s http://localhost:8080 groovy configure-jenkins.groovy
-
-java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle
+java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin swarm
 
 # restart jenkins to activate all plugins
 java -jar jenkins-cli.jar -s http://localhost:8080/ safe-restart

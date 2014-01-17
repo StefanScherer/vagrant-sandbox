@@ -15,6 +15,11 @@ sudo dpkg-reconfigure -f noninteractive tzdata
 # install development: 
 sudo apt-get install -y curl git vim
 
+if [ ! -d /vagrant/resources ]
+then
+  mkdir /vagrant/resources
+fi
+
 # install jenkins
 wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
 echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list

@@ -2,6 +2,7 @@
 & cinst Dogtail.VS2012.3
 & cinst visualsvn
 & cinst wixtoolset 
+& cinst MarkdownMode
 
 "Pin VS2012 to taskbar"
 $shell = New-Object -ComObject Shell.Application

@@ -18,13 +18,14 @@ echo 'Installing Developer Base'
 echo 'Installing VS2012'
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallVS2012.ps1"
 
-
-if not exist "c:\vagrant\resources\QtCommercial\Qt5.1.1\DistLicenseFile.txt" goto QTDONE
+rem set QTVERSION=5.1.1
+set QTVERSION=5.2.0
+if not exist "c:\vagrant\resources\QtCommercial\Qt%QTVERSION%\DistLicenseFile.txt" goto QTDONE
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\Qt5\Set-ShortCut.ps1"
 
-call c:\vagrant\shell\Qt5\install-qt5.bat -schedule 5.1.1 msvc2012
+call c:\vagrant\shell\Qt5\install-qt5.bat -schedule %QTVERSION% msvc2012
 rem schtasks /Delete /F /TN InstQt5
-rem schtasks /Create /SC ONLOGON /TN InstQt5 /TR "c:\vagrant\shell\Qt5\install-qt5.bat 5.1.1 msvc2012"
+rem schtasks /Create /SC ONLOGON /TN InstQt5 /TR "c:\vagrant\shell\Qt5\install-qt5.bat %QTVERSION% msvc2012"
 rem schtasks /Run /TN InstQt5
 
 :QTDONE

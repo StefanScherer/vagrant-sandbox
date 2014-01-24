@@ -27,15 +27,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define "vs2012win81" do |vs2012win81|
-    vs2012win81.vm.box = "win81x64en-eval"
-    vs2012win81.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    vs2012win81.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
-    vs2012win81.vm.provision "shell", path: "shell/main.cmd"
-    vs2012win81.winrm.port = 59813
-    vs2012win81.vm.network :forwarded_port, guest: 5985, host: 59813
+  config.vm.define "vs2012qt520" do |vs2012qt520|
+    vs2012qt520.vm.box = "win81x64en-eval"
+    vs2012qt520.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
+    vs2012qt520.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
+    vs2012qt520.vm.provision "shell", path: "shell/main.cmd"
+    vs2012qt520.winrm.port = 59813
+    vs2012qt520.vm.network :forwarded_port, guest: 5985, host: 59813
 
-     vs2012win81.vm.provider :virtualbox do |vb|
+     vs2012qt520.vm.provider :virtualbox do |vb|
        vb.gui = true
        vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
        vb.customize ["modifyvm", :id, "--vram", "32"]
@@ -43,15 +43,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      end
   end
 
-  config.vm.define "vs2012win7", primary: true do |vs2012win7|
-    vs2012win7.vm.box = "win81x64en-eval"
-    vs2012win7.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    vs2012win7.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
-    vs2012win7.vm.provision "shell", path: "shell/main.cmd"
-    vs2012win7.winrm.port = 59813
-    vs2012win7.vm.network :forwarded_port, guest: 5985, host: 59813
+  config.vm.define "vs2012", primary: true do |vs2012|
+    vs2012.vm.box = "win81x64en-eval"
+    vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
+    vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
+    vs2012.vm.provision "shell", path: "shell/main.cmd"
+    vs2012.winrm.port = 59813
+    vs2012.vm.network :forwarded_port, guest: 5985, host: 59813
 
-     vs2012win7.vm.provider :virtualbox do |vb|
+     vs2012.vm.provider :virtualbox do |vb|
        vb.gui = true
        vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
        vb.customize ["modifyvm", :id, "--vram", "32"]

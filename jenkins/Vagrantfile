@@ -22,21 +22,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # the Windows 2008 R2 Jenkins slave
+  # the Windows 2008 R2 Jenkins slave1
   config.vm.define "slave1", primary: true do |slave1|
     slave1.vm.box = "win2008R2-datacenter-eval"
     slave1.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
 #    slave1.vm.box_url = "file:///g:/GitHub/basebox-packer/virtualbox/win2008R2-datacenter-eval.box"
 
     slave1.vm.guest = :windows
+    slave1.vm.hostname = "slave2"
     slave1.windows.halt_timeout = 25
     slave1.vm.boot_timeout = 120
     slave1.winrm.username = "vagrant"
     slave1.winrm.password = "vagrant"
 
     slave1.vm.network :private_network, ip: "192.168.33.215", gateway: "192.168.33.1"
-    slave1.winrm.port = 50859
-    slave1.vm.network :forwarded_port, guest: 5985, host: 50859
+    slave1.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
 
     slave1.vm.provider :virtualbox do |vb|
       vb.gui = true
@@ -45,7 +45,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    end
   
     slave1.vm.provision "shell", path: "scripts/install-jenkins-slave.bat"
-    slave1.vm.provision "shell", path: "scripts/rename-to-slave1.bat"
+    slave1.vm.provision "shell", path: "scripts/reboot-to-slave.bat"
+  end
+
+
+  # the Windows 2008 R2 Jenkins slave2
+  config.vm.define "slave2", primary: true do |slave2|
+    slave2.vm.box = "win2008R2-datacenter-eval"
+    slave2.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
+
+    slave2.vm.guest = :windows
+    slave2.vm.hostname = "slave2"
+    slave2.windows.halt_timeout = 25
+    slave2.vm.boot_timeout = 120
+    slave2.winrm.username = "vagrant"
+    slave2.winrm.password = "vagrant"
+
+    slave2.vm.network :private_network, ip: "192.168.33.216", gateway: "192.168.33.1"
+    slave2.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+
+    slave2.vm.provider :virtualbox do |vb|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+   end
+  
+    slave2.vm.provision "shell", path: "scripts/install-jenkins-slave.bat"
+    slave2.vm.provision "shell", path: "scripts/reboot-to-slave.bat"
   end
 
 end

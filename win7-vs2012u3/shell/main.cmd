@@ -1,3 +1,5 @@
+call c:\vagrant\shell\solid-background.bat
+
 echo 'Ensuring .NET 4.0 is installed'
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallNet4.ps1"
 
@@ -14,6 +16,7 @@ set PATH=%PATH%;%ChocolateyInstall%\bin
 
 echo 'Installing Developer Base'
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallDeveloperBase.ps1"
+copy /Y "c:\vagrant\shell\winmerge.bat" %SystemDrive%\Chocolatey\bin\winmerge.bat
 
 echo 'Installing VS2012'
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallVS2012.ps1"

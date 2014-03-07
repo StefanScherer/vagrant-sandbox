@@ -59,7 +59,8 @@ Debugging Vagrant
 
 To turn on logging enter the following
 
-    set VAGRANT_LOG=info
-    vagrant up
-
+```
+set VAGRANT_LOG=info
+vagrant up
+```
 

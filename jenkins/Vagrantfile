@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
     ci.vm.provider :virtualbox do |vb|
       # Use VBoxManage to customize the VM. For example to change memory:
-      vb.customize ["modifyvm", :id, "--memory", "512", "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
     end
   end
 
@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     slave1.vm.provider :virtualbox do |vb|
       vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
    end
   
@@ -49,29 +49,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 
-  # the Windows 2008 R2 Jenkins slave2
-  config.vm.define "slave2", primary: true do |slave2|
-    slave2.vm.box = "win2008R2-datacenter-eval"
-    slave2.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
-
-    slave2.vm.guest = :windows
-    slave2.vm.hostname = "slave2"
-    slave2.windows.halt_timeout = 25
-    slave2.vm.boot_timeout = 120
-    slave2.winrm.username = "vagrant"
-    slave2.winrm.password = "vagrant"
-
-    slave2.vm.network :private_network, ip: "192.168.33.216", gateway: "192.168.33.1"
-    slave2.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
-
-    slave2.vm.provider :virtualbox do |vb|
-      vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
-      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-   end
-  
-    slave2.vm.provision "shell", path: "scripts/install-jenkins-slave.bat"
-    slave2.vm.provision "shell", path: "scripts/reboot-to-slave.bat"
-  end
+#  # the Windows 2008 R2 Jenkins slave2
+#  config.vm.define "slave2", primary: true do |slave2|
+#    slave2.vm.box = "win2008R2-datacenter-eval"
+#    slave2.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
+#
+#    slave2.vm.guest = :windows
+#    slave2.vm.hostname = "slave2"
+#    slave2.windows.halt_timeout = 25
+#    slave2.vm.boot_timeout = 120
+#    slave2.winrm.username = "vagrant"
+#    slave2.winrm.password = "vagrant"
+#
+#    slave2.vm.network :private_network, ip: "192.168.33.216", gateway: "192.168.33.1"
+#    slave2.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+#
+#    slave2.vm.provider :virtualbox do |vb|
+#      vb.gui = true
+#      vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
+#      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+#   end
+#  
+#    slave2.vm.provision "shell", path: "scripts/install-jenkins-slave.bat"
+#    slave2.vm.provision "shell", path: "scripts/reboot-to-slave.bat"
+#  end
 
 end

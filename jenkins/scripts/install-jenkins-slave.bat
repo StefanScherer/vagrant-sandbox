@@ -1,5 +1,5 @@
 rem @echo off
-
+if exist c:\jenkins\swarm-client.jar goto :EOF
 
 rem set timezone to Berlin
 tzutil /s "W. Europe Standard Time"
@@ -102,6 +102,8 @@ rem Schedule start of swarm client at start of the machine (after next reboot)
 rem
 
 schtasks /CREATE /TN JenkinsSwarmClient /RU vagrant /RP vagrant /XML "%TEMP%\JenkinsSwarmClient.xml"
+
+goto :EOF
 
 
 ::########################################

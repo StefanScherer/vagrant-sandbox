@@ -39,13 +39,12 @@ if exist c:\vagrant\resources\jenkins-host (
 )
 
 if not exist c:\jenkins\swarm-client.jar (
-  call wget -O c:\jenkins\swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.15/swarm-client-1.15-jar-with-dependencies.jar
+  if exist c:\vagrant\resources\swarm-client.jar (
+    copy c:\vagrant\resources\swarm-client.jar c:\jenkins\swarm-client.jar
+  ) else (
+    call wget -O c:\jenkins\swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.15/swarm-client-1.15-jar-with-dependencies.jar
+  )
 )
 
-
-rem Due to problems with UDP broadcast, use the -master switch at the moment 
-rem I found out that using another autodiscoveraddress for the virtualbox private network does work.
-rem C:\jenkins>java -jar swarm-client-1.15-jar-with-dependencies.jar -autoDiscoveryAddress 192.168.33.255
 rem Schedule start of swarm client at start of the machine (after next reboot)
-schtasks /CREATE /SC ONSTART /RU vagrant /RP vagrant /TN JenkinsSwarmClient /TR "java.exe -jar c:\jenkins\swarm-client.jar -autoDiscoveryAddress 192.168.33.255 -labels windows -fsroot c:\jenkins"
-
+schtasks /CREATE /TN JenkinsSwarmClient /RU vagrant /RP vagrant /XML "c:\vagrant\scripts\JenkinsSwarmClient.xml"

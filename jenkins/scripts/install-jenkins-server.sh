@@ -50,4 +50,4 @@ java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle
 java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin swarm
 
 # restart jenkins to activate all plugins
-java -jar jenkins-cli.jar -s http://localhost:8080/ safe-restart
+java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart

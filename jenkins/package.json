@@ -1,7 +1,7 @@
 {
   "name": "jenkins-box",
   "version": "0.0.1",
-  "description": "Setup a VM with Jenkins ready to be used as a CI server for ruby development.",
+  "description": "Setup a VM with Jenkins ready to be used as a CI server.",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dpree/jenkins-box.git"
+    "url": "git://github.com/StefanScherer/vagrant-sandbox/jenkins"
   },
   "keywords": [
     "jenkins",
@@ -18,10 +18,9 @@
     "vagrant",
     "ruby"
   ],
-  "author": "Jens Bissinger",
+  "author": "Stefan Scherer",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "154b3b2245d2cd2afbc32e05982ac34b294377bc",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.1.1",

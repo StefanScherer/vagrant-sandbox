@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
     ci.vm.hostname = "ci"
     ci.vm.network :private_network, ip: "192.168.33.214"
-    ci.vm.network :forwarded_port, guest: 8080, host: 8080
+#    ci.vm.network :forwarded_port, guest: 8080, host: 8080
   
     ci.vm.provision "shell", privileged: false, path: "scripts/install-jenkins-server.sh"
   
@@ -22,14 +22,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # the Windows 2008 R2 Jenkins slave1
+  # the Windows 2012 R2 Jenkins slave1
   config.vm.define "slave1", primary: true do |slave1|
-    slave1.vm.box = "win2008R2-datacenter-eval"
-    slave1.vm.box_url = "file:///e:/basebox/win2008R2-datacenter-eval.box"
-#    slave1.vm.box_url = "file:///g:/GitHub/basebox-packer/virtualbox/win2008R2-datacenter-eval.box"
+    slave1.vm.box = "windows_2012_r2"
+    slave1.vm.box_url = "file:///e:/basebox/windows_2012_r2_virtualbox.box"
 
     slave1.vm.guest = :windows
-    slave1.vm.hostname = "slave2"
+    slave1.vm.hostname = "slave1"
     slave1.windows.halt_timeout = 25
     slave1.vm.boot_timeout = 120
     slave1.winrm.username = "vagrant"

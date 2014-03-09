@@ -1,4 +1,9 @@
 rem @echo off
+
+
+rem set timezone to Berlin
+tzutil /s "W. Europe Standard Time"
+
 echo Ensuring .NET 4.0 is installed
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.github.com/StefanScherer/arduino-ide/install/InstallNet4.ps1'))"
 where cinst
@@ -18,29 +23,29 @@ set PATH=%PATH%;%ChocolateyInstall%\bin
 call cinst vim
 
 where java
-if ERRORLEVEL 1 call cinst jdk7
-rem it is reproducible that first cinst jdk7 fails, so try again if java is still not in path
-where java
-if ERRORLEVEL 1 call cinst jdk7
-where java
-if ERRORLEVEL 1 call cinst jdk7
+if ERRORLEVEL 1 call cinst java.jdk
 
 where wget
 if ERRORLEVEL 1 call cinst wget
 
 if not exist c:\jenkins mkdir c:\jenkins
 
-type c:\vagrant\resources\jenkins-host.txt >> c:\Windows\System32\drivers\etc\hosts
-for /f "tokens=2" %%i in ('findstr 1 c:\vagrant\resources\jenkins-host.txt') do set jenkinshost=%%i
+if exist c:\vagrant\resources\jenkins-host (
+  type c:\vagrant\resources\jenkins-host.txt >> c:\Windows\System32\drivers\etc\hosts
+  for /f "tokens=2" %%i in ('findstr 1 c:\vagrant\resources\jenkins-host.txt') do set jenkinshost=%%i
 
-if not exist c:\jenkins\swarm-client.jar (
-  copy /y c:\vagrant\resources\swarm-client.jar c:\jenkins
+  rem set Internet Explorer start page to jenkins
+  reg add "HKCU\Software\Microsoft\Internet Explorer\Main" /v "Start Page" /d "http://%jenkinshost%" /f
 )
 
-rem set Internet Explorer start page to jenkins
-reg add "HKCU\Software\Microsoft\Internet Explorer\Main" /v "Start Page" /d "http://%jenkinshost%" /f
+if not exist c:\jenkins\swarm-client.jar (
+  call wget -O c:\jenkins\swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/1.15/swarm-client-1.15-jar-with-dependencies.jar
+)
 
-rem Due to problems with UDP broadcast, use the -master switch at the moment
+
+rem Due to problems with UDP broadcast, use the -master switch at the moment 
+rem I found out that using another autodiscoveraddress for the virtualbox private network does work.
+rem C:\jenkins>java -jar swarm-client-1.15-jar-with-dependencies.jar -autoDiscoveryAddress 192.168.33.255
 rem Schedule start of swarm client at start of the machine (after next reboot)
-schtasks /CREATE /SC ONSTART /RU vagrant /RP vagrant /TN JenkinsSwarmClient /TR "java.exe -jar c:\jenkins\swarm-client.jar -master http://%jenkinshost% -labels windows -fsroot c:\jenkins"
+schtasks /CREATE /SC ONSTART /RU vagrant /RP vagrant /TN JenkinsSwarmClient /TR "java.exe -jar c:\jenkins\swarm-client.jar -autoDiscoveryAddress 192.168.33.255 -labels windows -fsroot c:\jenkins"
 

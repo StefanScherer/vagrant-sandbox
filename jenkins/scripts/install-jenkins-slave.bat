@@ -30,14 +30,6 @@ if ERRORLEVEL 1 call cinst wget
 
 if not exist c:\jenkins mkdir c:\jenkins
 
-if exist c:\vagrant\resources\jenkins-host (
-  type c:\vagrant\resources\jenkins-host.txt >> c:\Windows\System32\drivers\etc\hosts
-  for /f "tokens=2" %%i in ('findstr 1 c:\vagrant\resources\jenkins-host.txt') do set jenkinshost=%%i
-
-  rem set Internet Explorer start page to jenkins
-  reg add "HKCU\Software\Microsoft\Internet Explorer\Main" /v "Start Page" /d "http://%jenkinshost%" /f
-)
-
 if not exist c:\jenkins\swarm-client.jar (
   if exist c:\vagrant\resources\swarm-client.jar (
     copy c:\vagrant\resources\swarm-client.jar c:\jenkins\swarm-client.jar

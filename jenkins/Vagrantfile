@@ -28,10 +28,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     slave1.vm.guest = :windows
     slave1.vm.hostname = "slave1"
-    slave1.windows.halt_timeout = 25
-    slave1.vm.boot_timeout = 120
-    slave1.winrm.username = "vagrant"
-    slave1.winrm.password = "vagrant"
+#    slave1.winrm.username = "vagrant"
+#    slave1.winrm.password = "vagrant"
 
     slave1.vm.network :private_network, ip: "192.168.33.215", gateway: "192.168.33.1"
     slave1.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
@@ -42,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
       vb.customize ["modifyvm", :id, "--vram", "32"]
       vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
-   end
+    end
   
     slave1.vm.provision "shell", path: "scripts/install-jenkins-slave.bat"
     slave1.vm.provision "shell", path: "scripts/reboot-to-slave.bat"
@@ -51,7 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # the Ubuntu Jenkins slave2
   config.vm.define "slave2", primary: true do |slave2|
-    slave2.vm.box = "precise64"
+    slave2.vm.box     = "precise64"
     slave2.vm.box_url = "http://files.vagrantup.com/precise64.box"
   
     slave2.vm.hostname = "slave2"

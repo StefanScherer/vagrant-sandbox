@@ -1,20 +1,26 @@
 # jenkins
-This is a example of setting up a Jenkins server with a Windows slave
-and an Ubuntu slave.
+This is an example to set up a Jenkins server with a Windows slave and an Ubuntu slave.  
+The following machines will be created
+
+* `192.168.33.214 ci    ` - the Jenkins Server with web interface listening on port 80
+* `192.168.33.215 slave1` - the Windows 2012 R2 slave
+* `192.168.33.216 slave2` - the Ubuntu 12.04 LTS slave
+
+The slaves will be plugged in with the swarm-client, so feel free to add more slaves in the Vagrantfile if you need more.
 
 # Getting started
-If you want to use the backup and restore function using grunt, install some
-dependencies with
+If you want to use the backup and restore function to save and install Jenkins job configurations
+using grunt, install some dependencies with
 
     npm install
 
-After that, you only have to type
+Otherwise, or after that, you only have to type
 
     vagrant up
 
-and both the Jenkins server and the Windows and Ubuntu slaves will be started.
-For Windows, you need a `windows_2012_r2` box. For Ubuntu, the default
-precise64 box will be used.
+and then the Jenkins server and the Windows and Ubuntu slaves will be started.  
+For Windows, you need a `windows_2012_r2` box.  
+For Ubuntu, the default `precise64` box will be used.
 
 ## Manage Jenkins configuration
 
@@ -32,13 +38,13 @@ You can install jenkins configuration using:
 
 When you added / removed plugins you must restart Jenkins:
 
-    open http://192.168.33.214:8080/safeRestart
+    open http://192.168.33.214/safeRestart
 
 ## View Jenkins Web Interface
 If you just want to view into Jenkins use this command:
 
-    open http://192.168.33.214:8080/
+    open http://192.168.33.214/
 
 
 ## TODO
-* After starting the jenkins server, it does not create its config.xml which is needed by the swarm-clients. So open the Browser and once enter the Jenkins -> Manage Jenkins -> System configuration and press Save. After that the swarm-clients are able to connect.
+* In both install-jenkins-slave scripts the autoDiscoveryAddress must match your internal network for the UDP broadcast. So if you change the network address, change it in these scripts as well.

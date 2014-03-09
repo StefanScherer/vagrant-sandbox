@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jenkins: {
-      serverAddress: 'http://192.168.33.214:8080',
+      serverAddress: 'http://192.168.33.214',
       pipelineDirectory: 'jenkins-configuration'
     }
   })

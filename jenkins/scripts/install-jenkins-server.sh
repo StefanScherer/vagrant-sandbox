@@ -20,20 +20,34 @@ then
   mkdir /vagrant/resources
 fi
 
+# make jenkins available on port 80 in host-only network eth1
+sudo iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y iptables-persistent
+# sudo iptables-save | sudo tee /etc/iptables/rules.v4
+IPV4=`ifconfig eth1 | grep "inet addr"  | sed 's/.*inet addr://' | sed "s/ .*//"`
+
+echo "$IPV4 $HOSTNAME" >/vagrant/resources/jenkins-host.txt
+
 # install jenkins
 wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
 echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
 sudo apt-get update -y
 sudo apt-get install -y jenkins
-
-# make jenkins available on port 80 in host-only network eth1
-sudo iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 80 -j REDIRECT --to-port 8080
-ifconfig eth1 | grep "inet addr"  | sed 's/.*inet addr://' | sed "s/ .*/ $HOSTNAME/" >/vagrant/resources/jenkins-host.txt
+sudo sed -i 's/#JAVA_ARGS="-Xmx256m"/JAVA_ARGS="-Xmx512m"/g' /etc/default/jenkins
+cat <<LOCATION | sudo -u jenkins tee /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
+<?xml version='1.0' encoding='UTF-8'?>
+<jenkins.model.JenkinsLocationConfiguration>
+  <adminAddress>nobody@nowhere</adminAddress>
+  <jenkinsUrl>http://$IPV4/</jenkinsUrl>
+</jenkins.model.JenkinsLocationConfiguration>
+LOCATION
+sudo service jenkins restart
 
 # retrieve latest version of swarm-client
 swarmClientVersion=`curl -s  http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/maven-metadata.xml | grep latest | sed 's/\s*[<>a-z/]//g'`
 wget -O /vagrant/resources/swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$swarmClientVersion/swarm-client-$swarmClientVersion-jar-with-dependencies.jar
 
+echo "Waiting until Jenkins server is up"
 while [ ! -f jenkins-cli.jar ]
 do
     sleep 10

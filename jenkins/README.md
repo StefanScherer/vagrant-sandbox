@@ -39,3 +39,6 @@ If you just want to view into Jenkins use this command:
 
     open http://192.168.33.214:8080/
 
+
+## TODO
+* After starting the jenkins server, it does not create its config.xml which is needed by the swarm-clients. So open the Browser and once enter the Jenkins -> Manage Jenkins -> System configuration and press Save. After that the swarm-clients are able to connect.

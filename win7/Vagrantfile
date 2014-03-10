@@ -10,24 +10,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "win7x64en-enterprise"
+  config.vm.box = "windows_7"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
   config.vm.guest = :windows
-
-  # Max time to wait for the guest to shutdown
-  config.windows.halt_timeout = 25
 
   # Admin user name and password
   config.winrm.username = "vagrant"
   config.winrm.password = "vagrant"
-  config.winrm.port = 25985
 
   # Port forward WinRM and RDP
-  config.vm.network :forwarded_port, guest: 3389, host: 23389
-  config.vm.network :forwarded_port, guest: 5985, host: 25985
+  config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
+  config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -36,7 +31,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network :private_network, ip: "192.168.33.10"
+  config.vm.network :private_network, ip: "192.168.33.10"
+
+  # Ensure that all networks are set to private
+  config.windows.set_work_network = true
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

@@ -48,6 +48,7 @@ swarmClientVersion=`curl -s  http://maven.jenkins-ci.org/content/repositories/re
 wget -O /vagrant/resources/swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$swarmClientVersion/swarm-client-$swarmClientVersion-jar-with-dependencies.jar
 
 echo "Waiting until Jenkins server is up"
+sleep 30
 while [ ! -f jenkins-cli.jar ]
 do
     sleep 10

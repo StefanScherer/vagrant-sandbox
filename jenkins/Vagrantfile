@@ -65,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # the Windows 2008 R2 Jenkins slave3
   config.vm.define "slave3", primary: true do |slave3|
-    slave4.vm.box = "windows_2008_r2"
+    slave3.vm.box = "windows_2008_r2"
 
     slave3.vm.guest = :windows
     slave3.vm.hostname = "slave3"
@@ -85,5 +85,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     slave3.vm.provision "shell", path: "scripts/install-jenkins-slave.bat"
     slave3.vm.provision "shell", path: "scripts/reboot-to-slave.bat"
   end
+
 
 end

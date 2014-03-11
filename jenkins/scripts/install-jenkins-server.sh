@@ -33,6 +33,7 @@ wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key 
 echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
 sudo apt-get update -y
 sudo apt-get install -y jenkins
+
 sudo sed -i 's/#JAVA_ARGS="-Xmx256m"/JAVA_ARGS="-Xmx512m"/g' /etc/default/jenkins
 cat <<LOCATION | sudo -u jenkins tee /var/lib/jenkins/jenkins.model.JenkinsLocationConfiguration.xml
 <?xml version='1.0' encoding='UTF-8'?>
@@ -43,12 +44,16 @@ cat <<LOCATION | sudo -u jenkins tee /var/lib/jenkins/jenkins.model.JenkinsLocat
 LOCATION
 sudo service jenkins restart
 
+echo "Waiting until Jenkins server is up"
+tail -f /var/log/jenkins/jenkins.log | while read LOGLINE
+do
+  [[ "${LOGLINE}" == *"Jenkins is fully up and running"* ]] && pkill -P $$ tail
+done
+
 # retrieve latest version of swarm-client
 swarmClientVersion=`curl -s  http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/maven-metadata.xml | grep latest | sed 's/\s*[<>a-z/]//g'`
 wget -O /vagrant/resources/swarm-client.jar http://maven.jenkins-ci.org/content/repositories/releases/org/jenkins-ci/plugins/swarm-client/$swarmClientVersion/swarm-client-$swarmClientVersion-jar-with-dependencies.jar
 
-echo "Waiting until Jenkins server is up"
-sleep 30
 while [ ! -f jenkins-cli.jar ]
 do
     sleep 10

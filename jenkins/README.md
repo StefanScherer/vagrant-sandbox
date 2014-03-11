@@ -1,4 +1,4 @@
-# jenkins
+# Jenkins
 This is an example to set up a Jenkins server with a Windows slave and an Ubuntu slave.  
 The following machines will be created
 

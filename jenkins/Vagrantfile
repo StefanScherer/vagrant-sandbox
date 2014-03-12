@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     slave1.vm.provider :virtualbox do |vb|
       vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "1"]
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
       vb.customize ["modifyvm", :id, "--vram", "32"]
       vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]

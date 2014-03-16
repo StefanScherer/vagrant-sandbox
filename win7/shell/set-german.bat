@@ -5,20 +5,15 @@ call :heredoc html >%TEMP%\german.xml && goto next2
 <!-- from http://msdn.microsoft.com/en-ie/goglobal/bb964650(en-us).aspx -->
 <gs:GlobalizationServices xmlns:gs="urn:longhornGlobalizationUnattend">
 
-  <!--User List-->
   <gs:UserList>
     <gs:User UserID="Current" CopySettingsToSystemAcct="true" /> 
   </gs:UserList>
 
-  <!--input preferences--> 
   <gs:InputPreferences> 
-    <!--en-US--> 
     <gs:InputLanguageID Action="add" ID="0409:00000409"/> 
-    <!--de-DE--> 
     <gs:InputLanguageID Action="add" ID="0407:00000407" Default="true"/> 
   </gs:InputPreferences> 
 
-  <!--location--> 
   <gs:LocationPreferences> 
     <gs:GeoID Value="94"/> 
   </gs:LocationPreferences>

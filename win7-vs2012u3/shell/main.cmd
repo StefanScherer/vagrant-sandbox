@@ -1,9 +1,12 @@
 call c:\vagrant\shell\solid-background.bat
 
-echo 'Ensuring .NET 4.0 is installed'
+echo Turn off windows updates
+@powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\dis-updates.ps1"
+
+echo Ensuring .NET 4.0 is installed
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallNet4.ps1"
 
-echo 'Ensuring Chocolatey is Installed'
+echo Ensuring Chocolatey is Installed
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallChocolatey.ps1"
 
 where cinst
@@ -14,15 +17,15 @@ set ChocolateyInstall=%SystemDrive%\Chocolatey
 set PATH=%PATH%;%ChocolateyInstall%\bin
 :inst
 
-echo 'Installing Developer Base'
+echo Installing Developer Base
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallDeveloperBase.ps1"
 copy /Y "c:\vagrant\shell\winmerge.bat" %SystemDrive%\Chocolatey\bin\winmerge.bat
 
-echo 'Installing VS2012'
+echo Installing VS2012
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallVS2012.ps1"
 
-rem set QTVERSION=5.1.1
-set QTVERSION=5.2.0
+set QTVERSION=5.1.1
+rem set QTVERSION=5.2.0
 if not exist "c:\vagrant\resources\QtCommercial\Qt%QTVERSION%\DistLicenseFile.txt" goto QTDONE
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\Qt5\Set-ShortCut.ps1"
 

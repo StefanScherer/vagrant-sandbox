@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "vs2012", primary: true do |vs2012|
-    vs2012.vm.box = "win81x64en-eval"
+    vs2012.vm.box = "windows_7"
     vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
     vs2012.vm.provision "shell", path: "shell/main.cmd"

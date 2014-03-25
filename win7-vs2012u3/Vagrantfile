@@ -39,6 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        vb.gui = true
        vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
        vb.customize ["modifyvm", :id, "--vram", "32"]
+       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
        vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
      end
   end
@@ -85,6 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.gui = true
       vb.customize ["modifyvm", :id, "--memory", "2048"]
       vb.customize ["modifyvm", :id, "--vram", "32"]
+      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
       vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
     end
   end

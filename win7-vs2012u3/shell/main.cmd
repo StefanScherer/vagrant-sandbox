@@ -1,4 +1,6 @@
 call c:\vagrant\shell\solid-background.bat
+call c:\vagrant\shell\06-set-timezone-berlin.bat
+call c:\vagrant\shell\07-set-keyboard-german.bat
 
 echo Turn off windows updates
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\dis-updates.ps1"

@@ -6,18 +6,13 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.guest = :windows
-  config.windows.halt_timeout = 25
-  config.winrm.username = "vagrant"
-  config.winrm.password = "vagrant"
+  config.vm.communicator = "winrm"
 
   config.vm.define "multilang" do |multilang|
     multilang.vm.box = "win7x64en-enterprise"
     multilang.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     multilang.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
     multilang.vm.provision "shell", path: "shell/multilingual.cmd"
-    multilang.winrm.port = 59812
-    multilang.vm.network :forwarded_port, guest: 5985, host: 59812
 
     multilang.vm.provider :virtualbox do |vb|
       vb.gui = true
@@ -32,8 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vs2012qt520.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     vs2012qt520.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
     vs2012qt520.vm.provision "shell", path: "shell/main.cmd"
-    vs2012qt520.winrm.port = 59813
-    vs2012qt520.vm.network :forwarded_port, guest: 5985, host: 59813
 
      vs2012qt520.vm.provider :virtualbox do |vb|
        vb.gui = true
@@ -49,8 +42,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
     vs2012.vm.provision "shell", path: "shell/main.cmd"
-    vs2012.winrm.port = 59813
-    vs2012.vm.network :forwarded_port, guest: 5985, host: 59813
 
      vs2012.vm.provider :virtualbox do |vb|
        vb.gui = true
@@ -65,8 +56,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     testwin7x64.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     testwin7x64.vm.network :private_network, ip: "192.168.33.70", gateway: "192.168.33.1"
     testwin7x64.vm.provision "shell", path: "shell/test.cmd"
-    testwin7x64.winrm.port = 59867
-    testwin7x64.vm.network :forwarded_port, guest: 5985, host: 59867
 
     testwin7x64.vm.provider :virtualbox do |vb|
       vb.gui = true
@@ -79,8 +68,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     testwin81x64.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     testwin81x64.vm.network :private_network, ip: "192.168.33.81", gateway: "192.168.33.1"
     testwin81x64.vm.provision "shell", path: "shell/test.cmd"
-    testwin81x64.winrm.port = 59881
-    testwin81x64.vm.network :forwarded_port, guest: 5985, host: 59881
 
     testwin81x64.vm.provider :virtualbox do |vb|
       vb.gui = true

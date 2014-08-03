@@ -1,4 +1,4 @@
-call c:\vagrant\shell\solid-background.bat
+call c:\vagrant\shell\solid-desktop.bat
 call c:\vagrant\shell\06-set-timezone-berlin.bat
 call c:\vagrant\shell\07-set-keyboard-german.bat
 
@@ -15,13 +15,13 @@ where cinst
 if ERRORLEVEL 1 goto set_chocolatey
 goto inst
 :set_chocolatey
-set ChocolateyInstall=%SystemDrive%\Chocolatey
+set ChocolateyInstall=%ALLUSERSPROFILE%\Chocolatey
 set PATH=%PATH%;%ChocolateyInstall%\bin
 :inst
 
 echo Installing Developer Base
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallDeveloperBase.ps1"
-copy /Y "c:\vagrant\shell\winmerge.bat" %SystemDrive%\Chocolatey\bin\winmerge.bat
+copy /Y "c:\vagrant\shell\winmerge.bat" %ALLUSERSPROFILE%\Chocolatey\bin\winmerge.bat
 
 echo Installing VS2012
 @powershell -NoProfile -ExecutionPolicy Bypass -File "c:\vagrant\shell\InstallVS2012.ps1"

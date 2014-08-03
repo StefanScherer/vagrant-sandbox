@@ -1,4 +1,4 @@
-$ChocoInstallPath = "$env:SystemDrive\Chocolatey\bin"
+$ChocoInstallPath = "$env:ALLUSERSPROFILE\Chocolatey\bin"
 
 # Put chocolatey on the MACHINE path, vagrant does not have access to user environment variables
 $envPath = $env:PATH

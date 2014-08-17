@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   if Vagrant.has_plugin?("vagrant-vcloud")
     config.vm.provider :vcloud do |vcloud|
       vcloud.vapp_prefix = "wsus"
-      vcloud.ip_subnet = "172.16.32.1/255.255.255.0" # our test subnet with fixed IP adresses for everyone
+      vcloud.ip_subnet = "192.168.33..1/255.255.255.0" # our test subnet with fixed IP adresses for everyone
       # vcloud.ip_dns = ["192.168.33.2", "8.8.8.8"]  # dc + Google
     end
     config.vm.provider :vcloud do |cloud, override|
@@ -33,6 +33,28 @@ Vagrant.configure("2") do |config|
     wsus.vm.provider :virtualbox do |vb, override|
       vb.gui = true
       vb.customize ["modifyvm", :id, "--memory", 1532]
+      vb.customize ["modifyvm", :id, "--cpus", 1]
+      vb.customize ["modifyvm", :id, "--vram", "32"]
+      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      vb.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
+    end
+  end
+
+  config.vm.define "client" do |client|
+    client.vm.box = "windows_7_ultimate"
+    client.vm.hostname = "client"
+
+    client.vm.communicator = "winrm"
+    client.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    client.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
+    client.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
+    client.vm.network :private_network, ip: "192.168.33.3", gateway: "192.168.33.1"
+
+    client.vm.provision "shell", path: "scripts/set-wsus.ps1"
+
+    client.vm.provider :virtualbox do |vb, override|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", 1024]
       vb.customize ["modifyvm", :id, "--cpus", 1]
       vb.customize ["modifyvm", :id, "--vram", "32"]
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]

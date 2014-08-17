@@ -1,0 +1,42 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  if Vagrant.has_plugin?("vagrant-vcloud")
+    config.vm.provider :vcloud do |vcloud|
+      vcloud.vapp_prefix = "wsus"
+      vcloud.ip_subnet = "172.16.32.1/255.255.255.0" # our test subnet with fixed IP adresses for everyone
+      # vcloud.ip_dns = ["192.168.33.2", "8.8.8.8"]  # dc + Google
+    end
+    config.vm.provider :vcloud do |cloud, override|
+      override.vm.usable_port_range = 2200..2999
+    end
+  end
+
+  config.vm.define "wsus" do |wsus|
+    wsus.vm.box = "windows_2012_r2"
+    wsus.vm.hostname = "wsus"
+
+    wsus.vm.communicator = "winrm"
+    wsus.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    wsus.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
+    wsus.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
+    wsus.vm.network :forwarded_port, guest: 8530, host: 8530, id: "wsus-http", auto_correct: true
+    wsus.vm.network :forwarded_port, guest: 8531, host: 8531, id: "wsus-https", auto_correct: true
+    wsus.vm.network :private_network, ip: "192.168.33.2", gateway: "192.168.33.1"
+
+    wsus.vm.provision "shell", path: "scripts/download-InstallWSUS.ps1"
+#    wsus.vm.provision "shell", path: "provision-wsus.ps1"
+#    wsus.vm.provision "shell", path: "scripts/configure-wsus.ps1"
+
+    wsus.vm.provider :virtualbox do |vb, override|
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--memory", 1532]
+      vb.customize ["modifyvm", :id, "--cpus", 1]
+      vb.customize ["modifyvm", :id, "--vram", "32"]
+      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      vb.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
+    end
+  end
+end

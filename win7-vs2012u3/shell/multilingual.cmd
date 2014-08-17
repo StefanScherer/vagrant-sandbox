@@ -8,7 +8,7 @@ where cinst
 if ERRORLEVEL 1 goto set_chocolatey
 goto inst
 :set_chocolatey
-set ChocolateyInstall=%SystemDrive%\Chocolatey
+set ChocolateyInstall=%ALLUSERSPROFILE%\Chocolatey
 set PATH=%PATH%;%ChocolateyInstall%\bin
 :inst
 

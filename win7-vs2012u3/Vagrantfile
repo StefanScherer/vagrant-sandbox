@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.communicator = "winrm"
 
   config.vm.define "multilang" do |multilang|
-    multilang.vm.box = "win7x64en-enterprise"
+    multilang.vm.box = "windows_7"
     multilang.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     multilang.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
     multilang.vm.provision "shell", path: "shell/multilingual.cmd"
@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "vs2012", primary: true do |vs2012|
     vs2012.vm.box = "windows_7"
     vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
+    # vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
     vs2012.vm.provision "shell", path: "shell/main.cmd"
 
      vs2012.vm.provider :virtualbox do |vb|
@@ -49,6 +49,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
        vb.customize ["modifyvm", :id, "--vram", "32"]
        vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
      end
+    ["vmware_fusion", "vmware_workstation"].each do |provider|
+      vs2012.vm.provider provider do |v, override|
+        v.gui = true
+        v.vmx["memsize"] = "2048"
+        v.vmx["numvcpus"] = "2"
+        # v.vmx["vhv.enable"] = "TRUE"
+      end
+    end
   end
 
   config.vm.define "testwin7x64" do |testwin7x64|

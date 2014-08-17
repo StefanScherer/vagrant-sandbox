@@ -10,7 +10,7 @@ vagrant up
 
 ## Client
 
-In all clients set registry key `hklm\Software\Policies\Microsoft\Windows\WindowsUpdate` to `http://172.16.32.2:8530`
+In all clients set registry key `hklm\Software\Policies\Microsoft\Windows\WindowsUpdate` to `http://192.168.33.2:8530`
 
 Further reading
 

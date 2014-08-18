@@ -137,7 +137,7 @@ write-host 'Continuing anyway...' -ForegroundColor Magenta
 
 if ($WSUSType -eq 'SQLExpress')
 {
-if (!(Test-Path 'c:\vagrant\resources\ReportViewer.exe')) {
+if (!(Test-Path 'c:\vagrant\resources\SQLEXPRWT_x64_ENU.exe')) {
   write-host "Downloading SQL 2012 Express SP1 with Tools...please wait"
   $URL = "http://download.microsoft.com/download/5/2/9/529FEF7B-2EFB-439E-A2D1-A1533227CD69/SQLEXPRWT_x64_ENU.exe"
   (New-Object Net.WebClient).DownloadFile($URL, "c:\vagrant\resources\SQLEXPRWT_x64_ENU.exe")

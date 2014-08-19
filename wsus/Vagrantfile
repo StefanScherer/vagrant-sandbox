@@ -24,7 +24,9 @@ Vagrant.configure("2") do |config|
     wsus.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
     wsus.vm.network :forwarded_port, guest: 8530, host: 8530, id: "wsus-http", auto_correct: true
     wsus.vm.network :forwarded_port, guest: 8531, host: 8531, id: "wsus-https", auto_correct: true
+
     wsus.vm.network :private_network, ip: "192.168.33.2", gateway: "192.168.33.1"
+    wsus.vm.network "public_network"
 
     wsus.vm.provision "shell", path: "scripts/download-InstallWSUS.ps1"
 

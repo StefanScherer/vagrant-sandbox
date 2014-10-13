@@ -40,7 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "p50" do |p50|
     p50.vm.box = "ubuntu1404"
-    p50.vm.network :private_network, ip: "192.168.33.21", gateway: "192.168.33.1"
+    p50.vm.network :private_network, ip: "192.168.33.50", gateway: "192.168.33.1"
     p50.vm.provision "shell", path: "shell/p50.sh"
     p50.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]

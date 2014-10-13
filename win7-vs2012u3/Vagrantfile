@@ -6,9 +6,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.communicator = "winrm"
 
   config.vm.define "multilang" do |multilang|
+    multilang.vm.communicator = "winrm"
     multilang.vm.box = "windows_7"
     multilang.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     multilang.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
@@ -23,6 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "vs2012qt520" do |vs2012qt520|
+    vs2012qt520.vm.communicator = "winrm"
     vs2012qt520.vm.box = "win81x64en-eval"
     vs2012qt520.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     vs2012qt520.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
@@ -47,6 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "vs2012", primary: true do |vs2012|
+    vs2012.vm.communicator = "winrm"
     vs2012.vm.box = "windows_7"
     vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
@@ -69,6 +71,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "testwin7x64" do |testwin7x64|
+    testwin7x64.vm.communicator = "winrm"
     testwin7x64.vm.box = "win7x64en-enterprise"
     testwin7x64.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     testwin7x64.vm.network :private_network, ip: "192.168.33.70", gateway: "192.168.33.1"
@@ -81,6 +84,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "testwin81x64" do |testwin81x64|
+    testwin81x64.vm.communicator = "winrm"
     testwin81x64.vm.box = "win81x64en-eval"
     testwin81x64.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
     testwin81x64.vm.network :private_network, ip: "192.168.33.81", gateway: "192.168.33.1"

@@ -39,7 +39,7 @@ if "%SCHEDULE%x"=="1x" (
   schtasks /Create /SC ONCE /TN InstQt5 /TR "c:\vagrant\shell\Qt5\install-qt5.bat %1 %2" /ST 00:00
   schtasks /Run /TN InstQt5
   goto :EOF
-) 
+)
 
 if exist %USERPROFILE%\.qt-license goto QTLIC_INSTALLED
 if not exist "%~dp0\..\..\resources\QtCommercial\Qt%1\DistLicenseFile.txt" goto NO_QTLIC
@@ -76,13 +76,25 @@ cd /D C:\Qt\Qt%1\%1
 call 7za a Src.zip Src >nul
 :SRC_ZIPPED
 
-echo Starting Qt5 64bit compile in second window
-echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static >C:\Qt\Qt%1\%1\make_%2_64_static.bat
-start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static
+if exist C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip (
+  cd /D C:\Qt\Qt%1\%1
+  echo Extracting C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip
+  call 7za x C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip >nul
+) else (
+  echo Starting Qt5 64bit compile in second window
+  echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static >C:\Qt\Qt%1\%1\make_%2_64_static.bat
+  start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static
+)
 
-echo Starting Qt5 32bit compile in second window
-echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static >C:\Qt\Qt%1\%1\make_%2_32_static.bat
-start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static
+if exist C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip (
+  cd /D C:\Qt\Qt%1\%1
+  echo Extracting C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip
+  call 7za x C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip >nul
+) else (
+  echo Starting Qt5 32bit compile in second window
+  echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static >C:\Qt\Qt%1\%1\make_%2_32_static.bat
+  start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static
+)
 
 goto nowait
 

@@ -52,7 +52,7 @@ resources/
       msvc2012_64_static.zip
 ```
 
-They will be extracted into `C:/Qt/Qt5.1.1/msvc2012_32/` and `C:/Qt/Qt5.1.1/msvc2012_64/`.
+They will be extracted into `C:/Qt/Qt5.1.1/msvc2012_32_static/` and `C:/Qt/Qt5.1.1/msvc2012_64_static/`.
 
 ## Building the boxes
 

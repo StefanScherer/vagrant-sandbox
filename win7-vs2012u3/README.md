@@ -2,6 +2,13 @@
 
 This `Vagrantfile` describes a development environment with Microsoft Visual Studio 2012 Premium for C++ development with Qt5. The following boxes are available and **best used with VirtualBox**.
 
+The two VM's are connected through a private network 192.168.33.x.
+I have other Repos that fit into this subnet so I can use them for
+a bigger development and test scenario. From my host machine I can
+use WireShark to debug network traffic inside the private network.
+
+![vagrant private network](images/vagrant_private_network.png)
+
 ## vs2012
 
 The development machine with at least these software installed on it:
@@ -21,12 +28,16 @@ The development machine with at least these software installed on it:
 
 The IP address of this box is 192.168.33.11.
 
+![vs2012 VM](images/vs2012.jpg)
+
 ## multilang
 
 The test machine is provisioned with many users with **ten different Language Packs** installed.
 This machine also has the **Remote Debugger** installed to work from the `vs2012` box. The default port 4061 could be used to attach to processes in this box.
 
 The IP address of this box is 192.168.33.12.
+
+![multilang VM](images/multilang.jpg)
 
 ## Setting up resources directory
 

@@ -35,12 +35,7 @@ Import-Module PSWindowsUpdate
 # "List all available Windows Updates"
 # Get-WUList -MicrosoftUpdate 
 
-# "Install Czech Language Pack"
-# get-wuinstall -Title "Czech Language Pack" -AcceptAll
-# "Install Russian Language Pack"
-# get-wuinstall -Title "Russian Language Pack" -AcceptAll
-
-"Install some  Language Packs"
+"Install some Language Packs"
 get-wuinstall -Title "Bulgarian Language Pack" -AcceptAll
 get-wuinstall -Title "Danish Language Pack" -AcceptAll
 get-wuinstall -Title "German Language Pack" -AcceptAll
@@ -51,41 +46,37 @@ get-wuinstall -Title "Dutch Language Pack" -AcceptAll
 get-wuinstall -Title "Polish Language Pack" -AcceptAll
 get-wuinstall -Title "Romanian Language Pack" -AcceptAll
 
-# Latvian Language Pack
-# Czech Language Pack
-# Russian Language Pack
-# Danish Language Pack
-# Italian Language Pack
-# Hungarian Language Pack
-# Korean Language Pack
-# Swedish Language Pack
-# Polish Language Pack
-# Croatian Language Pack
-# Ukrainian Language Pack
-# Norwegian Language Pack
-# Greek Language Pack
-# Bulgarian Language Pack
-# Portuguese (Portugal) Language Pack
-# Dutch Language Pack
-# Portuguese (Brazil) Language Pack
-# Spanish Language Pack
-# Chinese (Simplified) Language Pack
-# Slovenian Language Pack
-# Chinese (Traditional) Language Pack
-# Japanese Language Pack
-# Thai Language Pack
-# German Language Pack
-# Estonian Language Pack
-# Lithuanian Language Pack
-# Slovak Language Pack
-# Finnish Language Pack
 # Arabic Language Pack
-# Hebrew Language Pack
-# Serbian (Latin) Language Pack
-# Romanian Language Pack
-# French Language Pack
-# Turkish Language Pack
-# Latvian Language Pack
+# Bulgarian Language Pack
+# Chinese (Simplified) Language Pack
+# Chinese (Traditional) Language Pack
+# Croatian Language Pack
 # Czech Language Pack
+# Danish Language Pack
+# Dutch Language Pack
+# Estonian Language Pack
+# Finnish Language Pack
+# French Language Pack
+# German Language Pack
+# Greek Language Pack
+# Hebrew Language Pack
+# Hungarian Language Pack
+# Italian Language Pack
+# Japanese Language Pack
+# Korean Language Pack
+# Latvian Language Pack
+# Lithuanian Language Pack
+# Norwegian Language Pack
+# Polish Language Pack
+# Portuguese (Brazil) Language Pack
+# Portuguese (Portugal) Language Pack
+# Romanian Language Pack
 # Russian Language Pack
-
+# Serbian (Latin) Language Pack
+# Slovak Language Pack
+# Slovenian Language Pack
+# Spanish Language Pack
+# Swedish Language Pack
+# Thai Language Pack
+# Turkish Language Pack
+# Ukrainian Language Pack

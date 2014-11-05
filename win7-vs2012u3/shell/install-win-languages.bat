@@ -1,32 +1,21 @@
+powershell -STA -file %~dp0setusertile.ps1 vagrant %~dp0..\images\vagrant.jpg
+
 powershell -NoProfile -ExecutionPolicy unrestricted -file %~dp0install-win-languages.ps1
 
-net user bg vagrant /add
-call psexec -accepteula -u bg -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "bg-BG" /f
+call :addUser bg vagrant bg-BG bg.jpg
+call :addUser da vagrant da-DK da.jpg
+call :addUser de vagrant de-DE de.jpg
+call :addUser es vagrant es-ES es.jpg
+call :addUser en vagrant en-US en-US.jpg
+call :addUser fr vagrant fr-FR fr.jpg
+call :addUser it vagrant it-IT it.jpg
+call :addUser nl vagrant nl-NL nl.jpg
+call :addUser pl vagrant pl-PL pl.jpg
+call :addUser ro vagrant ro-RO ro.jpg
 
-net user da vagrant /add
-call psexec -accepteula -u da -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "da-DK" /f
-
-net user de vagrant /add
-call psexec -accepteula -u de -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "de-DE" /f
-
-net user es vagrant /add
-call psexec -accepteula -u es -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "es-ES" /f
-
-net user en vagrant /add
-call psexec -accepteula -u en -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "en-US" /f
-
-net user fr vagrant /add
-call psexec -accepteula -u fr -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "fr-FR" /f
-
-net user it vagrant /add
-call psexec -accepteula -u it -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "it-IT" /f
-
-net user nl vagrant /add
-call psexec -accepteula -u nl -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "nl-NL" /f
-
-net user pl vagrant /add
-call psexec -accepteula -u pl -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "pl-PL" /f
-
-net user ro vagrant /add
-call psexec -accepteula -u ro -p vagrant reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "ro-RO" /f
-
+:addUser
+net user %1 %2 /add
+psexec -accepteula -u %1 -p %2 reg add "HKCU\Control Panel\Desktop" /v PreferredUILanguages /t REG_MULTI_SZ /s , /d "%3" /f
+echo  %~dp0..\images\%4
+powershell -STA -file %~dp0setusertile.ps1 %1 %~dp0..\images\%4
+goto :eof

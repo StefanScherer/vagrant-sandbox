@@ -79,7 +79,7 @@ call 7za a Src.zip Src >nul
 if exist C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip (
   cd /D C:\Qt\Qt%1\%1
   echo Extracting C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip
-  call 7za x C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip >nul
+  call 7za x -y C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip >nul
 ) else (
   echo Starting Qt5 64bit compile in second window
   echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 amd64 %2_64_static >C:\Qt\Qt%1\%1\make_%2_64_static.bat
@@ -89,7 +89,7 @@ if exist C:\vagrant\resources\QtCommercial\Qt%1\%2_64_static.zip (
 if exist C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip (
   cd /D C:\Qt\Qt%1\%1
   echo Extracting C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip
-  call 7za x C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip >nul
+  call 7za x -y C:\vagrant\resources\QtCommercial\Qt%1\%2_32_static.zip >nul
 ) else (
   echo Starting Qt5 32bit compile in second window
   echo start /WAIT %ComSpec% /C "%~dp0\install-qt5-compile-static.bat" %1 %2 x86 %2_32_static >C:\Qt\Qt%1\%1\make_%2_32_static.bat

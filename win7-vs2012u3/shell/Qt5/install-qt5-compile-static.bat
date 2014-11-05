@@ -23,7 +23,7 @@ echo Deleting Src
 del /F /S /Q Src\ >nul
 :exctract
 echo Extracting Src.zip
-call 7za x Src.zip >nul
+call 7za x -y Src.zip >nul
      
 xcopy "%~dp0\win32-%2-static" C:\Qt\Qt%1\%1\Src\qtbase\mkspecs\win32-%2\ /s /e /i /h /y
 :MKSPEC_INSTALLED

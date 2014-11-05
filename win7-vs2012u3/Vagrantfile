@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     multilang.vm.provider :virtualbox do |vb|
       vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
       vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'hda'] # choices: hda sb16 ac97
       vb.customize ["modifyvm", :id, '--usb', 'on', '--usbehci', 'off']
     end
@@ -56,7 +56,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
      vs2012.vm.provider :virtualbox do |vb|
        vb.gui = true
-       vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
+       vb.customize ["modifyvm", :id, "--memory", "1536", "--cpus", "2"]
        vb.customize ["modifyvm", :id, "--vram", "32"]
        vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
        vb.customize ["modifyvm", :id, "--vcpenabled", "off"]
@@ -65,7 +65,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ["vmware_fusion", "vmware_workstation"].each do |provider|
       vs2012.vm.provider provider do |v, override|
         v.gui = true
-        v.vmx["memsize"] = "2048"
+        v.vmx["memsize"] = "1536"
         v.vmx["numvcpus"] = "2"
         # v.vmx["vhv.enable"] = "TRUE"
       end

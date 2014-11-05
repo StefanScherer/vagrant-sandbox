@@ -6,98 +6,57 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  config.vm.define "vs2012", primary: true do |vs2012|
+    vs2012.vm.communicator = "winrm"
+    vs2012.vm.box = "windows_7"
+    vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
+    vs2012.vm.provision "shell", path: "shell/main.cmd"
+
+    ["virtualbox", "vmware_fusion", "vmware_workstation"].each do |provider|
+      vs2012.vm.provider provider do |v, override|
+        v.gui = true
+        v.memory = "1536"
+        v.cpus= "2"
+      end
+    end
+    vs2012.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--vram", "32"]
+      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+      vb.customize ["modifyvm", :id, "--vcpenabled", "off"]
+      vb.customize ["modifyvm", :id, "--vcpfile", "vs0212.webm"]
+    end
+  end
 
   config.vm.define "multilang" do |multilang|
     multilang.vm.communicator = "winrm"
     multilang.vm.box = "windows_7"
-    multilang.vm.box_url = "file:///e:/basebox/win7x64en-enterprise.box"
     multilang.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
     multilang.vm.provision "shell", path: "shell/multilingual.cmd"
+    multilang.vm.provision "shell", path: "shell/test.cmd"
 
-    multilang.vm.provider :virtualbox do |vb|
-      vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "768", "--cpus", "1"]
+    ["virtualbox", "vmware_fusion", "vmware_workstation"].each do |provider|
+      multilang.vm.provider provider do |v, override|
+        v.gui = true
+        v.memory = "768"
+        v.cpus= "1"
+      end
+    end
+    multilang.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, '--audio', 'dsound', '--audiocontroller', 'hda'] # choices: hda sb16 ac97
       vb.customize ["modifyvm", :id, '--usb', 'on', '--usbehci', 'off']
     end
-  end
-
-  config.vm.define "vs2012qt520" do |vs2012qt520|
-    vs2012qt520.vm.communicator = "winrm"
-    vs2012qt520.vm.box = "win81x64en-eval"
-    vs2012qt520.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    vs2012qt520.vm.network :private_network, ip: "192.168.33.13", gateway: "192.168.33.1"
-    vs2012qt520.vm.provision "shell", path: "shell/main.cmd"
-
-     vs2012qt520.vm.provider :virtualbox do |vb|
-       vb.gui = true
-       vb.customize ["modifyvm", :id, "--memory", "2048", "--cpus", "2"]
-       vb.customize ["modifyvm", :id, "--vram", "32"]
-       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-       vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
-     end
   end
 
   config.vm.define "p50" do |p50|
     p50.vm.box = "ubuntu1404"
     p50.vm.network :private_network, ip: "192.168.33.50", gateway: "192.168.33.1"
     p50.vm.provision "shell", path: "shell/p50.sh"
-    p50.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "1024", "--cpus", "1"]
-    end
-  end
 
-  config.vm.define "vs2012", primary: true do |vs2012|
-    vs2012.vm.communicator = "winrm"
-    vs2012.vm.box = "windows_7"
-    vs2012.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
-    vs2012.vm.provision "shell", path: "shell/main.cmd"
-
-     vs2012.vm.provider :virtualbox do |vb|
-       vb.gui = true
-       vb.customize ["modifyvm", :id, "--memory", "1536", "--cpus", "2"]
-       vb.customize ["modifyvm", :id, "--vram", "32"]
-       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-       vb.customize ["modifyvm", :id, "--vcpenabled", "off"]
-       vb.customize ["modifyvm", :id, "--vcpfile", "vs0212.webm"]
-     end
-    ["vmware_fusion", "vmware_workstation"].each do |provider|
-      vs2012.vm.provider provider do |v, override|
-        v.gui = true
-        v.vmx["memsize"] = "1536"
-        v.vmx["numvcpus"] = "2"
-        # v.vmx["vhv.enable"] = "TRUE"
+    ["virtualbox", "vmware_fusion", "vmware_workstation"].each do |provider|
+      p50.vm.provider provider do |v, override|
+        v.memory = "1024"
+        v.cpus= "1"
       end
     end
   end
-
-  config.vm.define "testwin7x64" do |testwin7x64|
-    testwin7x64.vm.communicator = "winrm"
-    testwin7x64.vm.box = "windows_7_noupdates"
-    testwin7x64.vm.network :private_network, ip: "192.168.33.70", gateway: "192.168.33.1"
-    testwin7x64.vm.provision "shell", path: "shell/test.cmd"
-
-    testwin7x64.vm.provider :virtualbox do |vb|
-      vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "768"]
-    end
-  end
-
-  config.vm.define "testwin81x64" do |testwin81x64|
-    testwin81x64.vm.communicator = "winrm"
-    testwin81x64.vm.box = "win81x64en-eval"
-    testwin81x64.vm.box_url = "file:///e:/basebox/win81x64en-eval.box"
-    testwin81x64.vm.network :private_network, ip: "192.168.33.81", gateway: "192.168.33.1"
-    testwin81x64.vm.provision "shell", path: "shell/test.cmd"
-
-    testwin81x64.vm.provider :virtualbox do |vb|
-      vb.gui = true
-      vb.customize ["modifyvm", :id, "--memory", "2048"]
-      vb.customize ["modifyvm", :id, "--vram", "32"]
-      vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-      vb.customize ["setextradata", :id, "CustomVideoMode1", "1680x1024x32"]
-    end
-  end
-
 end

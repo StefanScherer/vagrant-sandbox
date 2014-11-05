@@ -8,13 +8,13 @@ set PATH=%PATH%;C:\ruby200\bin
 
 call cinst curl
 
-call gem install sinatra
-call gem install sinatra-contrib
-call gem install ocra
+call gem install sinatra --no-ri --no-rdoc
+call gem install sinatra-contrib --no-ri --no-rdoc
+call gem install ocra --no-ri --no-rdoc
 
 REM from Seven Web Frameworks in Seven Weeks 
 call cinst sqlite
-call gem install rspec rack-test
-call gem install sqlite3 data_mapper dm-sqlite-adapter
-call gem install dm-serializer
+call gem install rspec rack-test --no-ri --no-rdoc
+call gem install sqlite3 data_mapper dm-sqlite-adapter --no-ri --no-rdoc
+call gem install dm-serializer --no-ri --no-rdoc
 

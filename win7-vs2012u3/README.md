@@ -33,7 +33,7 @@ The IP address of this box is 192.168.33.11.
 ## multilang
 
 The test machine is provisioned with many users with **ten different Language Packs** installed.
-This machine also has the **Remote Debugger** installed to work from the `vs2012` box. The default port 4061 could be used to attach to processes in this box.
+This machine also has the **Remote Debugger** installed to work from the `vs2012` box. The default port 4016 could be used to attach to processes in this box.
 
 The IP address of this box is 192.168.33.12.
 

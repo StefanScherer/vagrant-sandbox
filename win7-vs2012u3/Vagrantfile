@@ -9,6 +9,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "vs2012", primary: true do |vs2012|
     vs2012.vm.communicator = "winrm"
     vs2012.vm.box = "windows_7"
+    vs2012.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    vs2012.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
+    vs2012.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
     vs2012.vm.network :private_network, ip: "192.168.33.11", gateway: "192.168.33.1"
     vs2012.vm.provision "shell", path: "shell/main.cmd"
 
@@ -30,6 +33,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "multilang" do |multilang|
     multilang.vm.communicator = "winrm"
     multilang.vm.box = "windows_7"
+    multilang.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct: true
+    multilang.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
+    multilang.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
     multilang.vm.network :private_network, ip: "192.168.33.12", gateway: "192.168.33.1"
     multilang.vm.provision "shell", path: "shell/multilingual.cmd"
     multilang.vm.provision "shell", path: "shell/test.cmd"

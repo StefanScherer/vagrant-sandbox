@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "vs2017", primary: true do |cfg|
+    cfg.vm.box = "windows_2016_docker"
+    cfg.vm.provision "shell", path: "scripts/install-chocolatey.ps1"
+    cfg.vm.provision "shell", path: "scripts/install-vs2017.ps1"
+    cfg.vm.provision "shell", path: "scripts/install-github-extension.ps1"
+
+    ["vmware_fusion", "virtualbox", "vmware_workstation"].each do |provider|
+      cfg.vm.provider provider do |v, override|
+        v.gui = true
+        v.memory = "2048"
+        v.cpus= "2"
+      end
+    end
+  end
+end

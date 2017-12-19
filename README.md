@@ -10,49 +10,28 @@ Getting Started
 First install packer and vagrant on your windows host.
 Then create some baseboxes with packer.
 
-Install the vagrant-windows plugin into vagrant:
+Additionally install the vagrant-multiprovider-snap plugin to take snapshots with VirtualBox or VMware. Vagrant also has a snap function, but I still like this plugin a little more.
 
-    vagrant plugin install vagrant-windows
+    vagrant plugin install vagrant-multiprovider-snap
 
-Additionally install the vagrant-berkshelf plugin into vagrant.
+Another useful plugin is vagrant-reload as Windows VM's tend to need restarts during provisioning.
 
-    cd /D C:\HashiCorp\Vagrant\embedded\bin
-    gem install berkshelf
-    cd /
-    vagrant plugin install vagrant-berkshelf
+    vagrant plugin install vagrant-reload
 
-Additionally install the vagrant-vbox-snapshot plugin to take snapshots with VirtualBox.
-
-    vagrant plugin install vagrant-vbox-snapshot
-
-Setup a new directory to import a basebox with vagrant
+Setup a new directory for a vagrant environment
 
     cd /D B:\
     mkdir test
     cd test
-    vagrant init stefan-win81x64preview file:///e:/basebox/stefan-win81x64preview.box
+    vagrant init StefanScherer/windows_10
 
-Edit the newly created Vagrantfile
+Edit the newly created Vagrantfile if you like.
 
     vi Vagrantfile
 
-Add the following lines to the Vagrantfile
+Boot a Vagrant box
 
-    config.vm.guest = :windows
-
-    # Max time to wait for the guest to shutdown
-    config.windows.halt_timeout = 25
-
-    # Admin user name and password
-    config.winrm.username = "vagrant"
-    config.winrm.password = "vagrant"
-    config.winrm.port = 15985
-
-    # Port forward WinRM and RDP
-    config.vm.network :forwarded_port, guest: 3389, host: 13389
-    config.vm.network :forwarded_port, guest: 5985, host: 15985
-
-And also boot VM without headless if you want by turning on vb.gui = true
+    vagrant up
 
 Debugging Vagrant
 =================

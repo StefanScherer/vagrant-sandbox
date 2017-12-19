@@ -20,7 +20,6 @@ Another useful plugin is vagrant-reload as Windows VM's tend to need restarts du
 
 Setup a new directory for a vagrant environment
 
-    cd /D B:\
     mkdir test
     cd test
     vagrant init StefanScherer/windows_10

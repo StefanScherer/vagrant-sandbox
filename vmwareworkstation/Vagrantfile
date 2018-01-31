@@ -48,10 +48,11 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision "shell", inline: <<-SHELL
       iwr -useb https://chocolatey.org/install.ps1 | iex
+      choco feature disable --name showDownloadProgress
       choco install -y vagrant -version 2.0.1
       choco install -y vmwareworkstation -version 14.1.1
       $env:PATH="$env:PATH;C:\HashiCorp\Vagrant\bin"
-      vagrant plugin install vagrant-vmware-workstation --plugin-version 5.0.4
+      vagrant.exe plugin install vagrant-vmware-workstation --plugin-version 5.0.4
     SHELL
   end  
 end
